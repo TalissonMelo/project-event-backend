@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -34,6 +35,7 @@ public class Event implements Serializable {
 	private Date finalData;
 	private Double price;
 
+	@JsonBackReference 
 	@ManyToMany
 	@JoinTable(name = "categoria_evento", 
 				joinColumns = @JoinColumn(name = "event_id"), 

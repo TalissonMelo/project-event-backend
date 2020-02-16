@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "Categoria")
 public class Category implements Serializable {
@@ -21,6 +23,7 @@ public class Category implements Serializable {
 	private Integer id;
 	private String name;
 
+	@JsonManagedReference
 	@ManyToMany(mappedBy = "categories")
 	private List<Event> events = new ArrayList<>();
 
