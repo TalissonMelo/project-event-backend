@@ -1,33 +1,37 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Categoria")
-public class Category implements Serializable{
+public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	
+
+	@ManyToMany(mappedBy = "categories")
+	private List<Event> events = new ArrayList<>();
+
 	public Category() {
-		
+
 	}
-	
+
 	public Category(Integer id, String name) {
 		this.id = id;
 		this.name = name;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -43,6 +47,10 @@ public class Category implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public List<Event> getEvents() {
+		return events;
 	}
 
 	@Override
@@ -69,7 +77,5 @@ public class Category implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 
 }
