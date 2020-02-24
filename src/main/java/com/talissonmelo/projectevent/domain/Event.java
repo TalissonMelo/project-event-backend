@@ -27,6 +27,7 @@ public class Event implements Serializable {
 	
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date finalData;
+	
 	private Double price;
 
 
