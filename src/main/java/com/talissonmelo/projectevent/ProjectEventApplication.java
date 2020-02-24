@@ -50,12 +50,6 @@ public class ProjectEventApplication implements CommandLineRunner {
 		Event ev2 = new Event(null, "Bienal de ideias", "Apresentação dos Trabalhos", sdf.parse("01/08/2020 19:15:00"),
 				sdf.parse("01/08/2020 22:40:00"), 80.00);
 
-		cat1.getEvents().addAll(Arrays.asList(ev1, ev2));
-		cat2.getEvents().addAll(Arrays.asList(ev1));
-		cat3.getEvents().addAll(Arrays.asList(ev1, ev2));
-
-		ev1.getCategories().addAll(Arrays.asList(cat1, cat2, cat3));
-		ev2.getCategories().addAll(Arrays.asList(cat1, cat3));
 		
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2));
