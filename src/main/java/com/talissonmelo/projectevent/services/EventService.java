@@ -27,4 +27,28 @@ public class EventService {
 		return event.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Event.class.getName()));
 	}
+	
+	public Event insert(Event obj) {
+		obj = eventRepository.save(obj);
+		return obj;
+	}
+	
+	public void delete(Integer id) {
+		eventRepository.deleteById(id);
+	}
+	
+	public Event update(Integer id, Event obj) {
+		Event entity = eventRepository.getOne(id);
+		updateData(entity, obj);
+		return eventRepository.save(entity);
+	}
+
+	private void updateData(Event entity, Event obj) {
+		entity.setName(obj.getName());
+		entity.setDescription(obj.getDescription());
+		entity.setInitialData(obj.getInitialData());
+		entity.setFinalData(obj.getFinalData());
+		entity.setPrice(obj.getPrice());
+		
+	}
 }
