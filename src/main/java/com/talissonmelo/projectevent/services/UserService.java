@@ -1,0 +1,50 @@
+package com.talissonmelo.projectevent.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.talissonmelo.projectevent.domain.User;
+import com.talissonmelo.projectevent.repositories.UserRepository;
+import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	public List<User> findAll() {
+		List<User> list = userRepository.findAll();
+		return list;
+	}
+
+	public User findById(Integer id) {
+		Optional<User> user = userRepository.findById(id);
+		// return user.get();
+		return user.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id : " + id + " Tipo : " + User.class.getName()));
+	}
+
+	public User insert(User obj) {
+		return userRepository.save(obj);
+	}
+
+	public void delete(Integer id) {
+		userRepository.deleteById(id);
+	}
+
+	public User update(Integer id, User obj) {
+		User entity = userRepository.getOne(id);
+		updateData(entity, obj);
+		return userRepository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+	}
+}
