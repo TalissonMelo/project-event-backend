@@ -1,12 +1,17 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,15 +26,20 @@ public class Event implements Serializable {
 	private Integer id;
 	private String name;
 	private String description;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date initialData;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private Date finalData;
-	
+
 	private Double price;
 
+	@ManyToMany
+	@JoinTable(name = "Evento_Categoria",
+			joinColumns = @JoinColumn(name = "event_id"),
+			inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<Category> categories = new ArrayList<>();
 
 	public Event() {
 
@@ -91,6 +101,10 @@ public class Event implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	
+	public List<Category> getCategories() {
+		return categories;
 	}
 
 	@Override
