@@ -75,8 +75,8 @@ public class ProjectEventApplication implements CommandLineRunner {
 		User user1 = new User(null, "Talisson Melo", "talisson.cursos@gmail.com", UserType.PHYSICS, "12345678", "3242-3414");
 		User user2 = new User(null, "Tales", "tales.cursos@gmail.com", UserType.LEGAL, "12345008", "3242-3415");
 		
-		Address ad1 = new Address(null, "Ouro Verde", "Casa B", "Rua 06", "65", "48444-233");
-		Address ad2 = new Address(null, "Ouro Amarelo", "Casa A", "Rua 02", "11", "48444-203");
+		Address ad1 = new Address(null, "Ouro Verde", "Casa B", "Rua 06", "65", "48444-233", ct1);
+		Address ad2 = new Address(null, "Ouro Amarelo", "Casa A", "Rua 02", "11", "48444-203", ct2);
 		
 		stateRepository.saveAll(Arrays.asList(st1,st2));
 		cityRepository.saveAll(Arrays.asList(ct1,ct2,ct3));
