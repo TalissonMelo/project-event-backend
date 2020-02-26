@@ -3,11 +3,16 @@ package com.talissonmelo.projectevent.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.repositories.UserRepository;
+import com.talissonmelo.projectevent.services.exceptions.DataBaseException;
 import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -33,13 +38,23 @@ public class UserService {
 	}
 
 	public void delete(Integer id) {
-		userRepository.deleteById(id);
+		try {
+			userRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ObjectNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataBaseException(e.getMessage());
+		}
 	}
 
 	public User update(Integer id, User obj) {
-		User entity = userRepository.getOne(id);
-		updateData(entity, obj);
-		return userRepository.save(entity);
+		try {
+			User entity = userRepository.getOne(id);
+			updateData(entity, obj);
+			return userRepository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ObjectNotFoundException(id);
+		}
 	}
 
 	private void updateData(User entity, User obj) {
