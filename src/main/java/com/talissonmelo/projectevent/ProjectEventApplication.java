@@ -8,12 +8,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.talissonmelo.projectevent.domain.Address;
 import com.talissonmelo.projectevent.domain.Category;
 import com.talissonmelo.projectevent.domain.City;
 import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.domain.State;
 import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.domain.enums.UserType;
+import com.talissonmelo.projectevent.repositories.AddressRepository;
 import com.talissonmelo.projectevent.repositories.CategoryRepository;
 import com.talissonmelo.projectevent.repositories.CityRepository;
 import com.talissonmelo.projectevent.repositories.EventRepository;
@@ -37,6 +39,9 @@ public class ProjectEventApplication implements CommandLineRunner {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectEventApplication.class, args);
@@ -57,9 +62,6 @@ public class ProjectEventApplication implements CommandLineRunner {
 				sdf.parse("01/08/2020 22:40:00"), 80.00);
 
 		
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-		eventRepository.saveAll(Arrays.asList(ev1, ev2));
-		
 		State st1 = new State(null, "Minas Gerais");
 		State st2 = new State(null, "São Paulo");
 		
@@ -70,14 +72,19 @@ public class ProjectEventApplication implements CommandLineRunner {
 		st1.getCities().addAll(Arrays.asList(ct1,ct2));
 		st2.getCities().addAll(Arrays.asList(ct3));
 		
-		stateRepository.saveAll(Arrays.asList(st1,st2));
-		cityRepository.saveAll(Arrays.asList(ct1,ct2,ct3));
-		
 		User user1 = new User(null, "Talisson Melo", "talisson.cursos@gmail.com", UserType.PHYSICS, "12345678", "3242-3414");
-
 		User user2 = new User(null, "Tales", "tales.cursos@gmail.com", UserType.LEGAL, "12345008", "3242-3415");
 		
+		Address ad1 = new Address(null, "Ouro Verde", "Casa B", "Rua 06", "65", "48444-233");
+		Address ad2 = new Address(null, "Ouro Amarelo", "Casa A", "Rua 02", "11", "48444-203");
+		
+		stateRepository.saveAll(Arrays.asList(st1,st2));
+		cityRepository.saveAll(Arrays.asList(ct1,ct2,ct3));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
+		eventRepository.saveAll(Arrays.asList(ev1, ev2));
 		userRepository.saveAll(Arrays.asList(user1, user2));
+		addressRepository.saveAll(Arrays.asList(ad1,ad2));
+		
 
 		
 		
