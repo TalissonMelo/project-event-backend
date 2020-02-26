@@ -12,9 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Evento")
@@ -40,12 +42,19 @@ public class Event implements Serializable {
 			joinColumns = @JoinColumn(name = "event_id"),
 			inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> categories = new ArrayList<>();
+	
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
 
+	
 	public Event() {
 
 	}
 
-	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price) {
+	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price, Address address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -53,6 +62,7 @@ public class Event implements Serializable {
 		this.initialData = initialData;
 		this.finalData = finalData;
 		this.price = price;
+		this.address = address;
 	}
 
 	public Integer getId() {
@@ -130,5 +140,13 @@ public class Event implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 }

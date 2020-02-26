@@ -1,14 +1,20 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Endereco")
@@ -27,6 +33,10 @@ public class Address implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
+	private List<Event> events = new ArrayList<>();
 
 	public Address() {
 
@@ -124,5 +134,15 @@ public class Address implements Serializable {
 			return false;
 		return true;
 	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+	
+	
 
 }
