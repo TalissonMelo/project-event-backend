@@ -29,14 +29,15 @@ public class Event implements Serializable {
 	private String name;
 	private String description;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo" )
 	private Date initialData;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss",  timezone = "America/Sao_Paulo")
 	private Date finalData;
 
 	private Double price;
-
+	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "Evento_Categoria",
 			joinColumns = @JoinColumn(name = "event_id"),

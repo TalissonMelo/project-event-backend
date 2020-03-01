@@ -1,36 +1,36 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "Categoria")
-public class Category implements Serializable {
-	private static final long serialVersionUID = 1L;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+@Entity
+@Table(name = "Pedido")
+public class Order implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
-
-	@ManyToMany(mappedBy = "categories")
-	private List<Event> events = new ArrayList<>();
-
-	public Category() {
-
+	
+	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
+	private Date instant;
+	
+	public Order() {
+		
 	}
 
-	public Category(Integer id, String name) {
+	public Order(Integer id, Date instant) {
+		super();
 		this.id = id;
-		this.name = name;
+		this.instant = instant;
 	}
 
 	public Integer getId() {
@@ -41,16 +41,12 @@ public class Category implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Date getInstant() {
+		return instant;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<Event> getEvents() {
-		return events;
+	public void setInstant(Date instant) {
+		this.instant = instant;
 	}
 
 	@Override
@@ -69,7 +65,7 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Order other = (Order) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -77,4 +73,5 @@ public class Category implements Serializable {
 			return false;
 		return true;
 	}
+
 }
