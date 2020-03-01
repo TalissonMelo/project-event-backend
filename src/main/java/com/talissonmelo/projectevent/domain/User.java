@@ -1,13 +1,17 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.talissonmelo.projectevent.domain.enums.UserType;
 
 @Entity
@@ -23,6 +27,10 @@ public class User implements Serializable {
 	private Integer userType;
 	private String CpfCnpj;
 	private String phone;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<Event> events = new ArrayList<>();
 
 	public User() {
 
@@ -109,6 +117,14 @@ public class User implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
 	}
 
 	

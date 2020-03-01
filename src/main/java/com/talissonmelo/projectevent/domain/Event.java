@@ -44,18 +44,20 @@ public class Event implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> categories = new ArrayList<>();
 	
-	
-	
 	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address address;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	
 	public Event() {
 
 	}
 
-	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price, Address address) {
+	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price, Address address, User user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -64,6 +66,7 @@ public class Event implements Serializable {
 		this.finalData = finalData;
 		this.price = price;
 		this.address = address;
+		this.user = user;
 	}
 
 	public Integer getId() {
@@ -149,5 +152,13 @@ public class Event implements Serializable {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 }
