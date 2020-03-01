@@ -20,7 +20,7 @@ public class Order implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	private Date instant;
 	
 	public Order() {
