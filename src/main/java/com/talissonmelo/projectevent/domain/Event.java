@@ -48,6 +48,7 @@ public class Event implements Serializable {
 	@JoinColumn(name = "address_id")
 	private Address address;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
