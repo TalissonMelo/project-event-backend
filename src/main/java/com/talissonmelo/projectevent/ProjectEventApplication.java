@@ -61,7 +61,6 @@ public class ProjectEventApplication implements CommandLineRunner {
 				"3242-3414");
 		User user2 = new User(null, "Tales", "tales.cursos@gmail.com", UserType.LEGAL, "12345008", "3242-3415");
 
-
 		State st1 = new State(null, "Minas Gerais");
 		State st2 = new State(null, "São Paulo");
 
@@ -95,17 +94,17 @@ public class ProjectEventApplication implements CommandLineRunner {
 
 		ev1.getCategories().addAll(Arrays.asList(cat1, cat3));
 		ev2.getCategories().addAll(Arrays.asList(cat2, cat3));
-		
+
 		user1.getEvents().addAll(Arrays.asList(ev1));
 		user2.getEvents().addAll(Arrays.asList(ev2));
-		
+
 		userRepository.saveAll(Arrays.asList(user1, user2));
 
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2));
 
-		Order or1 = new Order(null, sdf.parse("01/03/2020 11:59:00"));
-		Order or2 = new Order(null, sdf.parse("01/02/2020 12:49:00"));
+		Order or1 = new Order(null, sdf.parse("01/03/2020 11:59:00"), user2);
+		Order or2 = new Order(null, sdf.parse("01/02/2020 12:49:00"), user1);
 
 		orderRepository.saveAll(Arrays.asList(or1, or2));
 	}

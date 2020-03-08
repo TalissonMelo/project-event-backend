@@ -29,6 +29,9 @@ public class User implements Serializable {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Event> events = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "user")
+	private List<Order> orders = new ArrayList<>();
 
 	public User() {
 
@@ -40,7 +43,7 @@ public class User implements Serializable {
 		this.name = name;
 		this.email = email;
 		this.userType = userType.getCod();
-		CpfCnpj = cpfCnpj;
+		this.CpfCnpj = cpfCnpj;
 		this.phone = phone;
 	}
 
@@ -91,6 +94,19 @@ public class User implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -116,14 +132,5 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-
-	public List<Event> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
-
 	
 }
