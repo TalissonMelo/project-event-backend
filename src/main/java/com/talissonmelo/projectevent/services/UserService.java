@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.talissonmelo.projectevent.domain.User;
+import com.talissonmelo.projectevent.dto.UserDTO;
 import com.talissonmelo.projectevent.repositories.UserRepository;
 import com.talissonmelo.projectevent.services.exceptions.DataBaseException;
 import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
@@ -61,5 +62,17 @@ public class UserService {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
 		entity.setPhone(obj.getPhone());
+	}
+	
+	public User fromDTO(UserDTO objDto) {
+		User user = new User();
+		user.setId(objDto.getId());
+		user.setName(objDto.getName());
+		user.setEmail(objDto.getEmail());
+		user.setUserType(objDto.getUserType());
+		user.setCpfCnpj(objDto.getCpfCnpj());
+		user.setPhone(objDto.getPhone());
+		
+		return user;
 	}
 }

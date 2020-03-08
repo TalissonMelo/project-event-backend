@@ -1,6 +1,9 @@
 package com.talissonmelo.projectevent.resources;
 
+import java.net.URI;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.projectevent.domain.User;
+import com.talissonmelo.projectevent.dto.UserDTO;
 import com.talissonmelo.projectevent.services.UserService;
 
 @RestController
@@ -36,9 +41,11 @@ public class UserResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj) {
-		obj = userService.insert(obj);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<User> insert(@Valid @RequestBody UserDTO objDTO) {
+		User obj = userService.fromDTO(objDTO);
+		userService.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(obj);
 	}
 
 	@DeleteMapping(value = "/{id}")
@@ -48,8 +55,10 @@ public class UserResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User obj){
-		obj = userService.update(id, obj);
+	public ResponseEntity<User> update(@Valid @PathVariable Integer id, @RequestBody UserDTO objDTO){
+		User obj = userService.fromDTO(objDTO);
+		obj.setId(id);
+		userService.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
 }
