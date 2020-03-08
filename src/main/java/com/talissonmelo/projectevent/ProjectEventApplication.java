@@ -13,14 +13,17 @@ import com.talissonmelo.projectevent.domain.Category;
 import com.talissonmelo.projectevent.domain.City;
 import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.domain.Order;
+import com.talissonmelo.projectevent.domain.Payment;
 import com.talissonmelo.projectevent.domain.State;
 import com.talissonmelo.projectevent.domain.User;
+import com.talissonmelo.projectevent.domain.enums.StatusPayment;
 import com.talissonmelo.projectevent.domain.enums.UserType;
 import com.talissonmelo.projectevent.repositories.AddressRepository;
 import com.talissonmelo.projectevent.repositories.CategoryRepository;
 import com.talissonmelo.projectevent.repositories.CityRepository;
 import com.talissonmelo.projectevent.repositories.EventRepository;
 import com.talissonmelo.projectevent.repositories.OrderRepository;
+import com.talissonmelo.projectevent.repositories.PaymentRepository;
 import com.talissonmelo.projectevent.repositories.StateRepository;
 import com.talissonmelo.projectevent.repositories.UserRepository;
 
@@ -47,6 +50,9 @@ public class ProjectEventApplication implements CommandLineRunner {
 
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectEventApplication.class, args);
@@ -103,9 +109,14 @@ public class ProjectEventApplication implements CommandLineRunner {
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2));
 
-		Order or1 = new Order(null, sdf.parse("01/03/2020 11:59:00"), user2);
-		Order or2 = new Order(null, sdf.parse("01/02/2020 12:49:00"), user1);
-
+		Payment pay = new Payment(null, StatusPayment.AWAITING_PAYMENT);
+		Payment pay2 = new Payment(null,StatusPayment.PAID);
+		
+		paymentRepository.saveAll(Arrays.asList(pay, pay2));
+		
+		Order or1 = new Order(null, sdf.parse("01/03/2020 11:59:00"), user2, pay);
+		Order or2 = new Order(null, sdf.parse("01/02/2020 12:49:00"), user1, pay2);
+		
 		orderRepository.saveAll(Arrays.asList(or1, or2));
 	}
 

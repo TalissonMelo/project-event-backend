@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -31,15 +32,20 @@ public class Order implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@OneToOne
+	@JoinColumn(name = "payment_id")
+	private Payment payment;
+	
 	public Order() {
 
 	}
 
-	public Order(Integer id, Date instant, User user) {
+	public Order(Integer id, Date instant, User user, Payment payment) {
 		super();
 		this.id = id;
 		this.instant = instant;
 		this.user = user;
+		this.payment = payment;
 	}
 
 	public Integer getId() {
@@ -64,6 +70,15 @@ public class Order implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	@Override
