@@ -28,7 +28,6 @@ public class AddressService {
 
 	public Address findById(Integer id) {
 		Optional<Address> obj = addressRepository.findById(id);
-		// return obj.get();
 		return obj.orElseThrow(() -> new ObjectNotFoundException(id));
 	}
 
