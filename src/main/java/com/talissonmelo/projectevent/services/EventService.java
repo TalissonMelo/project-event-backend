@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.talissonmelo.projectevent.domain.Event;
+import com.talissonmelo.projectevent.dto.EventDTO;
 import com.talissonmelo.projectevent.repositories.EventRepository;
 import com.talissonmelo.projectevent.services.exceptions.DataBaseException;
 import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
@@ -65,5 +66,17 @@ public class EventService {
 		entity.setFinalData(obj.getFinalData());
 		entity.setPrice(obj.getPrice());
 
+	}
+	
+	public Event fromDTO(EventDTO objDTO) {
+		Event obj = new Event();
+		obj.setId(objDTO.getId());
+		obj.setName(objDTO.getName());
+		obj.setDescription(objDTO.getDescription());
+		obj.setInitialData(objDTO.getInitialData());
+		obj.setFinalData(objDTO.getFinalData());
+		obj.setPrice(objDTO.getPrice());
+		
+		return obj;
 	}
 }

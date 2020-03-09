@@ -15,6 +15,7 @@ public class UserDTO {
 	@Length(min = 8 , max = 80, message = "Nome deve ter no mínimo 8 caracteres.")
 	private String name;
 	
+	@NotEmpty(message = "Email obrigatório.")
 	@Email(message = "Email inválido.")
 	private String email;
 
