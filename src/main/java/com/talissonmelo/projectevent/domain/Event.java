@@ -1,7 +1,11 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,29 +29,31 @@ public class Event implements Serializable {
 	private String name;
 	private String description;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo" )
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	private Date initialData;
 
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss",  timezone = "America/Sao_Paulo")
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	private Date finalData;
 
 	private Double price;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address address;
-	
+
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	
+	private Set<Ticket> tickets = new HashSet<>();
+
 	public Event() {
 
 	}
 
-	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price, Address address, User user) {
+	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price,
+			Address address, User user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,6 +63,14 @@ public class Event implements Serializable {
 		this.price = price;
 		this.address = address;
 		this.user = user;
+	}
+
+	public List<Order> getOrders() {
+		List<Order> list = new ArrayList<>();
+		for (Ticket x : tickets) {
+			list.add(x.getOrder());
+		}
+		return list;
 	}
 
 	public Integer getId() {
@@ -107,6 +121,26 @@ public class Event implements Serializable {
 		this.price = price;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,21 +164,5 @@ public class Event implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 }

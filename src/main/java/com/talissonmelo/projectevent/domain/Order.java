@@ -2,6 +2,8 @@ package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,10 +33,13 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	private Set<Ticket> tickets = new HashSet<>();
 
 	@OneToOne
 	@JoinColumn(name = "payment_id")
 	private Payment payment;
+	
 	
 	public Order() {
 
@@ -79,6 +84,10 @@ public class Order implements Serializable {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+	
+	public Set<Ticket> getTickets() {
+		return tickets;
 	}
 
 	@Override
