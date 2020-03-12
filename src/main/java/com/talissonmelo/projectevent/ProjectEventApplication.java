@@ -9,7 +9,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.talissonmelo.projectevent.domain.Address;
-import com.talissonmelo.projectevent.domain.Category;
 import com.talissonmelo.projectevent.domain.City;
 import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.domain.Order;
@@ -19,7 +18,6 @@ import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.domain.enums.StatusPayment;
 import com.talissonmelo.projectevent.domain.enums.UserType;
 import com.talissonmelo.projectevent.repositories.AddressRepository;
-import com.talissonmelo.projectevent.repositories.CategoryRepository;
 import com.talissonmelo.projectevent.repositories.CityRepository;
 import com.talissonmelo.projectevent.repositories.EventRepository;
 import com.talissonmelo.projectevent.repositories.OrderRepository;
@@ -29,9 +27,6 @@ import com.talissonmelo.projectevent.repositories.UserRepository;
 
 @SpringBootApplication
 public class ProjectEventApplication implements CommandLineRunner {
-
-	@Autowired
-	private CategoryRepository categoryRepository;
 
 	@Autowired
 	private EventRepository eventRepository;
@@ -85,28 +80,15 @@ public class ProjectEventApplication implements CommandLineRunner {
 
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));
 
-		Category cat1 = new Category(null, "Public");
-		Category cat2 = new Category(null, "Privado");
-		Category cat3 = new Category(null, "Sociais");
-
 		Event ev1 = new Event(null, "Apresentação Pi", "Apresentação dos Trabalhos de término de período.",
 				sdf.parse("01/06/2020 19:15:00"), sdf.parse("01/06/2020 22:40:00"), 50.00, ad1, user1);
 		Event ev2 = new Event(null, "Bienal de ideias", "Apresentação dos Trabalhos", sdf.parse("01/08/2020 19:15:00"),
 				sdf.parse("01/08/2020 22:40:00"), 80.00, ad1, user2);
 
-		cat1.getEvents().addAll(Arrays.asList(ev1));
-		cat2.getEvents().addAll(Arrays.asList(ev2));
-		cat3.getEvents().addAll(Arrays.asList(ev1, ev2));
-
-		ev1.getCategories().addAll(Arrays.asList(cat1, cat3));
-		ev2.getCategories().addAll(Arrays.asList(cat2, cat3));
-
 		user1.getEvents().addAll(Arrays.asList(ev1));
 		user2.getEvents().addAll(Arrays.asList(ev2));
 
 		userRepository.saveAll(Arrays.asList(user1, user2));
-
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2));
 
 		Payment pay = new Payment(null, StatusPayment.AWAITING_PAYMENT);

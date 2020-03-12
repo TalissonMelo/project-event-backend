@@ -41,10 +41,11 @@ public class UserService {
 	public void delete(Integer id) {
 		try {
 			userRepository.deleteById(id);
+			
 		} catch (EmptyResultDataAccessException e) {
 			throw new ObjectNotFoundException(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataBaseException(e.getMessage());
+			throw new DataBaseException("Usuário não pode ser deletado. " + e.getMessage());
 		}
 	}
 
