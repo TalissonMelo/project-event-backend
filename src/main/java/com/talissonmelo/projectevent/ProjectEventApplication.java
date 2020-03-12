@@ -14,6 +14,7 @@ import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.domain.Order;
 import com.talissonmelo.projectevent.domain.Payment;
 import com.talissonmelo.projectevent.domain.State;
+import com.talissonmelo.projectevent.domain.Ticket;
 import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.domain.enums.StatusPayment;
 import com.talissonmelo.projectevent.domain.enums.UserType;
@@ -23,6 +24,7 @@ import com.talissonmelo.projectevent.repositories.EventRepository;
 import com.talissonmelo.projectevent.repositories.OrderRepository;
 import com.talissonmelo.projectevent.repositories.PaymentRepository;
 import com.talissonmelo.projectevent.repositories.StateRepository;
+import com.talissonmelo.projectevent.repositories.TicketRepository;
 import com.talissonmelo.projectevent.repositories.UserRepository;
 
 @SpringBootApplication
@@ -48,6 +50,9 @@ public class ProjectEventApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private TicketRepository ticketRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectEventApplication.class, args);
@@ -100,6 +105,14 @@ public class ProjectEventApplication implements CommandLineRunner {
 		Order or2 = new Order(null, sdf.parse("01/02/2020 12:49:00"), user1, pay2);
 		
 		orderRepository.saveAll(Arrays.asList(or1, or2));
+		
+		Ticket t1 = new Ticket(or1, ev1, 1, 50.00);
+		
+		or1.getTickets().addAll(Arrays.asList(t1));
+		
+		ev1.getTickets().addAll(Arrays.asList(t1));
+		
+		ticketRepository.saveAll(Arrays.asList(t1));
 	}
 
 }
