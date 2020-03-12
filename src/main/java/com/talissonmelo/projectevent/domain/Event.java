@@ -47,6 +47,7 @@ public class Event implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.event")
 	private Set<Ticket> tickets = new HashSet<>();
 
@@ -67,6 +68,7 @@ public class Event implements Serializable {
 		this.user = user;
 	}
 
+	@JsonIgnore
 	public List<Order> getOrders() {
 		List<Order> list = new ArrayList<>();
 		for (Ticket x : tickets) {

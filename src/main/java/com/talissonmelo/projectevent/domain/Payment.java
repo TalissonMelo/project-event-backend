@@ -19,6 +19,7 @@ public class Payment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Integer status;
+	
 
 	public Payment() {
 
