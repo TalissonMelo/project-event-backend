@@ -18,6 +18,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.talissonmelo.projectevent.domain.enums.EventType;
 
 @Entity
 @Table(name = "Evento")
@@ -37,6 +38,8 @@ public class Event implements Serializable {
 	private Date finalData;
 
 	private Double price;
+	
+	private Integer type;
 
 	@ManyToOne
 	@JoinColumn(name = "address_id")
@@ -55,7 +58,7 @@ public class Event implements Serializable {
 
 	}
 
-	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price,
+	public Event(Integer id, String name, String description, Date initialData, Date finalData, Double price, EventType type,
 			Address address, User user) {
 		super();
 		this.id = id;
@@ -64,6 +67,7 @@ public class Event implements Serializable {
 		this.initialData = initialData;
 		this.finalData = finalData;
 		this.price = price;
+		this.type = type.getCod();
 		this.address = address;
 		this.user = user;
 	}
@@ -123,6 +127,14 @@ public class Event implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	
+	public EventType getType() {
+		return EventType.toEnum(type);
+	}
+
+	public void setType(EventType type) {
+		this.type = type.getCod();
 	}
 
 	public Address getAddress() {

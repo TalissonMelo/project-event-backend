@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.talissonmelo.projectevent.domain.enums.EventType;
 
 public class EventDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -30,6 +31,8 @@ public class EventDTO implements Serializable{
 	private Date finalData;
 
 	private Double price;
+	
+	private Integer type;
 	
 	public EventDTO() {
 		
@@ -82,4 +85,12 @@ public class EventDTO implements Serializable{
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public EventType getType() {
+		return EventType.toEnum(type);
+	}
+
+	public void setType(EventType type) {
+		this.type = type.getCod();
+	}	
 }

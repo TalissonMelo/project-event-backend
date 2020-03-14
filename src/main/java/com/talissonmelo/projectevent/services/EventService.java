@@ -45,7 +45,7 @@ public class EventService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new ObjectNotFoundException(id);
 		} catch (DataIntegrityViolationException e) {
-			throw new DataBaseException(e.getMessage());
+			throw new DataBaseException("Evento não pode ser deletado. " + e.getMessage());
 		}
 	}
 
@@ -65,6 +65,7 @@ public class EventService {
 		entity.setInitialData(obj.getInitialData());
 		entity.setFinalData(obj.getFinalData());
 		entity.setPrice(obj.getPrice());
+		entity.setType(obj.getType());
 
 	}
 	
@@ -76,6 +77,7 @@ public class EventService {
 		obj.setInitialData(objDTO.getInitialData());
 		obj.setFinalData(objDTO.getFinalData());
 		obj.setPrice(objDTO.getPrice());
+		obj.setType(objDTO.getType());
 		
 		return obj;
 	}
