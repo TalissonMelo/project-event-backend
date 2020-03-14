@@ -8,6 +8,9 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import com.talissonmelo.projectevent.domain.Event;
@@ -22,8 +25,14 @@ public class EventService {
 	@Autowired
 	private EventRepository eventRepository;
 
-	public List<Event> findAll() {
-		List<Event> list = eventRepository.findAll();
+	public List<Event> findAll(Event eventFilter) {
+		
+		Example<Event> example = Example.of(eventFilter, 
+				ExampleMatcher.matching()
+				.withIgnoreCase()
+				.withStringMatcher(StringMatcher.CONTAINING));
+		
+		List<Event> list = eventRepository.findAll(example);
 		return list;
 	}
 
