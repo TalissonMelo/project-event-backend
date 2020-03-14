@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,6 +55,10 @@ public class Event implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.event")
 	private Set<Ticket> tickets = new HashSet<>();
+	
+	@ElementCollection
+	@CollectionTable(name = "Participantes")
+	private Set<String> participants = new HashSet<>();
 
 	public Event() {
 
@@ -157,6 +163,10 @@ public class Event implements Serializable {
 		return tickets;
 	}
 
+	public Set<String> getParticipants() {
+		return participants;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

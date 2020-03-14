@@ -90,6 +90,8 @@ public class ProjectEventApplication implements CommandLineRunner {
 				sdf.parse("01/06/2020 19:15:00"), sdf.parse("01/06/2020 22:40:00"), 50.00, EventType.PUBLIC ,ad1, user1);
 		Event ev2 = new Event(null, "Bienal de ideias", "Apresentação dos Trabalhos", sdf.parse("01/08/2020 19:15:00"),
 				sdf.parse("01/08/2020 22:40:00"), 80.00, EventType.PRIVATE, ad1, user2);
+		
+		ev2.getParticipants().addAll(Arrays.asList("123.123.123-12","113.123.123-12","133.123.123-12","143.123.123-12","153.123.123-12"));
 
 		user1.getEvents().addAll(Arrays.asList(ev1));
 		user2.getEvents().addAll(Arrays.asList(ev2));
