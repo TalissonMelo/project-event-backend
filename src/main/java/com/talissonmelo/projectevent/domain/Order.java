@@ -34,15 +34,14 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@OneToMany(mappedBy = "id.order")
-	private Set<Ticket> tickets = new HashSet<>();
 
 	@OneToOne
 	@JoinColumn(name = "payment_id")
 	private Payment payment;
-	
-	
+
+	@OneToMany(mappedBy = "id.order")
+	private Set<Ticket> tickets = new HashSet<>();
+
 	public Order() {
 
 	}
@@ -53,6 +52,14 @@ public class Order implements Serializable {
 		this.instant = instant;
 		this.user = user;
 		this.payment = payment;
+	}
+
+	public Double getValueTotal() {
+		double result = 0;
+		for (Ticket tic : tickets) {
+			result += tic.getSubTotal();
+		}
+		return result;
 	}
 
 	public Integer getId() {
@@ -78,7 +85,6 @@ public class Order implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
 
 	public Payment getPayment() {
 		return payment;
@@ -87,7 +93,7 @@ public class Order implements Serializable {
 	public void setPayment(Payment payment) {
 		this.payment = payment;
 	}
-	
+
 	public Set<Ticket> getTickets() {
 		return tickets;
 	}

@@ -31,6 +31,10 @@ public class Ticket implements Serializable{
 		this.amount = amount;
 		this.price = price;
 	}
+	
+	public Double getSubTotal() {
+		return price * amount;
+	}
 
 	@JsonIgnore
 	public Order getOrder() {
