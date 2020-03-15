@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.dto.EventDTO;
+import com.talissonmelo.projectevent.dto.EventNewDTO;
 import com.talissonmelo.projectevent.services.EventService;
 
 @RestController
@@ -52,7 +53,7 @@ public class EventResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Event> insert(@Valid @RequestBody EventDTO objDTO) {
+	public ResponseEntity<Event> insert(@Valid @RequestBody EventNewDTO objDTO) {
 		Event obj = eventService.fromDTO(objDTO);
 		eventService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
