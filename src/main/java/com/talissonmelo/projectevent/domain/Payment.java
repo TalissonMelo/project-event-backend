@@ -3,11 +3,13 @@ package com.talissonmelo.projectevent.domain;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.talissonmelo.projectevent.domain.enums.StatusPayment;
 
 @Entity
@@ -16,19 +18,25 @@ public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Integer status;
+	
+	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name = "order_id")
+	@MapsId
+	private Order order;
 	
 
 	public Payment() {
 
 	}
 
-	public Payment(Integer id, StatusPayment status) {
+	public Payment(Integer id, StatusPayment status, Order order) {
 		super();
 		this.id = id;
 		this.status = (status == null ) ? null: status.getCod();
+		this.order = order;
 	}
 
 	public Integer getId() {
@@ -45,6 +53,14 @@ public class Payment implements Serializable {
 
 	public void setStatus(StatusPayment status) {
 		this.status = status.getCod();
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	@Override

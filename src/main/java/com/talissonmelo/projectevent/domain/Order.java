@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,8 +36,7 @@ public class Order implements Serializable {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToOne
-	@JoinColumn(name = "payment_id")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 
 	@OneToMany(mappedBy = "id.order")
@@ -46,12 +46,11 @@ public class Order implements Serializable {
 
 	}
 
-	public Order(Integer id, Date instant, User user, Payment payment) {
+	public Order(Integer id, Date instant, User user) {
 		super();
 		this.id = id;
 		this.instant = instant;
 		this.user = user;
-		this.payment = payment;
 	}
 
 	public Double getValueTotal() {

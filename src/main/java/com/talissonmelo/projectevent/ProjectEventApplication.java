@@ -99,14 +99,20 @@ public class ProjectEventApplication implements CommandLineRunner {
 		userRepository.saveAll(Arrays.asList(user1, user2));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2));
 
-		Payment pay = new Payment(null, StatusPayment.AWAITING_PAYMENT);
-		Payment pay2 = new Payment(null,StatusPayment.PAID);
+		Order or1 = new Order(null, sdf.parse("01/03/2020 11:59:00"), user2);
+		Order or2 = new Order(null, sdf.parse("01/03/2020 11:59:00"), user1);
 		
+		Payment pay = new Payment(null, StatusPayment.AWAITING_PAYMENT,or1);
+		or1.setPayment(pay);
+		
+		Payment pay2 = new Payment(null,StatusPayment.PAID,or2);
+		or2.setPayment(pay2);
+
+		user2.getOrders().addAll(Arrays.asList(or1));
+		user1.getOrders().addAll(Arrays.asList(or2));
+		
+		orderRepository.saveAll(Arrays.asList(or1,or2));
 		paymentRepository.saveAll(Arrays.asList(pay, pay2));
-		
-		Order or1 = new Order(null, sdf.parse("01/03/2020 11:59:00"), user2, pay);
-		
-		orderRepository.saveAll(Arrays.asList(or1));
 		
 		Ticket t1 = new Ticket(or1, ev1, 1, 50.00);
 		
