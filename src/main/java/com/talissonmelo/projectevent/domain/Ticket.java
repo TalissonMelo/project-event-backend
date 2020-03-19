@@ -41,8 +41,16 @@ public class Ticket implements Serializable{
 		return id.getOrder();
 	}
 
+	public void setOrder(Order order) {
+		id.setOrder(order);
+	}
+	
 	public Event getEvent() {
 		return id.getEvent();
+	}
+	
+	public void setEvent(Event event) {
+		id.setEvent(event);
 	}
 
 	public TicketPK getId() {
