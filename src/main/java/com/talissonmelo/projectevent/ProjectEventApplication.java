@@ -64,9 +64,8 @@ public class ProjectEventApplication implements CommandLineRunner {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		User user1 = new User(null, "Talisson Melo", "talisson.cursos@gmail.com", UserType.PHYSICS, "12345678",
-				"3242-3414");
-		User user2 = new User(null, "Tales", "tales.cursos@gmail.com", UserType.LEGAL, "12345008", "3242-3415");
+		User user1 = new User(null, "Talisson Melo", "talisson.cursos@gmail.com", UserType.PHYSICS, "12345678","3242-3414", "123456");
+		User user2 = new User(null, "Tales", "tales.cursos@gmail.com", UserType.LEGAL, "12345008", "3242-3415", "123456");
 
 		State st1 = new State(null, "Minas Gerais");
 		State st2 = new State(null, "São Paulo");

@@ -35,7 +35,18 @@ public class UserService {
 	}
 
 	public User insert(User obj) {
+		validateEmail(obj.getEmail());
 		return userRepository.save(obj);
+	}
+	
+	public void validateEmail(String email) {
+		
+		boolean exists = userRepository.existsByEmail(email);
+		if(exists) {
+			throw new DataBaseException("Já existe um usuário cadastrado com este email!.");
+		}
+		
+		
 	}
 
 	public void delete(Integer id) {
@@ -63,6 +74,7 @@ public class UserService {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
 		entity.setPhone(obj.getPhone());
+		entity.setPassword(obj.getPassword());
 	}
 	
 	public User fromDTO(UserDTO objDto) {
@@ -73,6 +85,7 @@ public class UserService {
 		user.setUserType(objDto.getUserType());
 		user.setCpfCnpj(objDto.getCpfCnpj());
 		user.setPhone(objDto.getPhone());
+		user.setPassword(objDto.getPassword());
 		
 		return user;
 	}

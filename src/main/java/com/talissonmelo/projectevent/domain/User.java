@@ -26,6 +26,7 @@ public class User implements Serializable {
 	private Integer userType;
 	private String CpfCnpj;
 	private String phone;
+	private String password;
 	
 	@OneToMany(mappedBy = "user")
 	private List<Event> events = new ArrayList<>();
@@ -37,7 +38,7 @@ public class User implements Serializable {
 
 	}
 
-	public User(Integer id, String name, String email, UserType userType, String cpfCnpj, String phone) {
+	public User(Integer id, String name, String email, UserType userType, String cpfCnpj, String phone, String password) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -45,6 +46,7 @@ public class User implements Serializable {
 		this.userType = (userType == null) ? null : userType.getCod();
 		this.CpfCnpj = cpfCnpj;
 		this.phone = phone;
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -95,6 +97,14 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public List<Event> getEvents() {
 		return events;
 	}
@@ -131,6 +141,5 @@ public class User implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
+	}	
 }
