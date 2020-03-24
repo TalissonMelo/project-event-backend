@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.projectevent.domain.User;
+import com.talissonmelo.projectevent.dto.UserAuthenticateDTO;
 import com.talissonmelo.projectevent.dto.UserDTO;
 import com.talissonmelo.projectevent.services.UserService;
+import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -46,6 +48,17 @@ public class UserResource {
 		userService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> authenticate(@RequestBody UserAuthenticateDTO objDTO) {
+		try {
+			User user = userService.authenticate(objDTO.getEmail(), objDTO.getPassword());
+			return ResponseEntity.ok().body(user);
+		} catch (ObjectNotFoundException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+
 	}
 
 	@DeleteMapping(value = "/{id}")

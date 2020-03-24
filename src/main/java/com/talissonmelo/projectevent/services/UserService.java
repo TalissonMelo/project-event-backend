@@ -59,6 +59,19 @@ public class UserService {
 			throw new DataBaseException("Usuário não pode ser deletado. " + e.getMessage());
 		}
 	}
+	
+	public User authenticate(String email, String password) {
+		Optional<User> user = userRepository.findByEmail(email);
+		
+		if(!user.isPresent()) {
+			throw new ObjectNotFoundException("Usuário não encontrado!.");
+		}
+		
+		if(!user.get().getPassword().equals(password)) {
+			throw new ObjectNotFoundException("Senha inválida!.");
+		}
+		return user.get();
+	}
 
 	public User update(Integer id, User obj) {
 		try {
