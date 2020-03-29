@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.talissonmelo.projectevent.services.DBService;
 import com.talissonmelo.projectevent.services.EmailService;
-import com.talissonmelo.projectevent.services.MockEmailService;
+import com.talissonmelo.projectevent.services.SmtpEmailService;
 
 @Configuration
 @Profile("test")
@@ -24,8 +24,13 @@ public class TestConfig {
 		return true;
 	}
 	
-	@Bean
+	/*@Bean
 	public EmailService emailService() {
 		return new MockEmailService();
+	}*/
+	
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
 	}
 }

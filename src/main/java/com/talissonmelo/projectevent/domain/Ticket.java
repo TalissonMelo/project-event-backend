@@ -111,14 +111,18 @@ public class Ticket implements Serializable {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append("Evento : " );
+		builder.append("Organizador do Evento : " );
+		builder.append(getEvent().getUser().getName());
+		builder.append("\nContato para Pagamento do Ingresso : " );
+		builder.append(getEvent().getUser().getEmail());
+		builder.append("\nContato para Pagamento do Ingresso : " );
+		builder.append(getEvent().getUser().getPhone());
+		builder.append("\nEvento : " );
 		builder.append(getEvent().getName());
 		builder.append("\nInicio do Evento : ");
 		builder.append(sdf.format(getEvent().getInitialData()));
 		builder.append("\nTermino do Evento : ");
 		builder.append(sdf.format(getEvent().getFinalData()));
-		builder.append("\nEndereço\nRua: ");
-		builder.append(getEvent().getAddress().getStreet());
 		builder.append("\nEndereço\nRua: ");
 		builder.append(getEvent().getAddress().getStreet());
 		builder.append(", número : ");
