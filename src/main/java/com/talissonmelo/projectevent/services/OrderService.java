@@ -37,6 +37,9 @@ public class OrderService {
 	
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+	@Autowired
+	private EmailService emailService;
 
 	public List<Order> findAll(){
 		List<Order> list = orderRepository.findAll();
@@ -77,7 +80,7 @@ public class OrderService {
 		obj.getTickets().addAll(Arrays.asList(ticket));
 		
 		ticketRepository.save(ticket);
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }
