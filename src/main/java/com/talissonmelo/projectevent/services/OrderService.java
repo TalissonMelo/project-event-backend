@@ -77,6 +77,7 @@ public class OrderService {
 		obj.getTickets().addAll(Arrays.asList(ticket));
 		
 		ticketRepository.save(ticket);
+		System.out.println(obj);
 		return obj;
 	}
 }

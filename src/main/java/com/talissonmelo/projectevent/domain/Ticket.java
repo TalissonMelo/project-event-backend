@@ -1,6 +1,9 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -10,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Ingresso")
-public class Ticket implements Serializable{
+public class Ticket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@JsonIgnore
@@ -31,7 +34,7 @@ public class Ticket implements Serializable{
 		this.amount = amount;
 		this.price = price;
 	}
-	
+
 	public Double getSubTotal() {
 		return price * amount;
 	}
@@ -44,11 +47,11 @@ public class Ticket implements Serializable{
 	public void setOrder(Order order) {
 		id.setOrder(order);
 	}
-	
+
 	public Event getEvent() {
 		return id.getEvent();
 	}
-	
+
 	public void setEvent(Event event) {
 		id.setEvent(event);
 	}
@@ -101,4 +104,41 @@ public class Ticket implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Evento : " );
+		builder.append(getEvent().getName());
+		builder.append("\nInicio do Evento : ");
+		builder.append(sdf.format(getEvent().getInitialData()));
+		builder.append("\nTermino do Evento : ");
+		builder.append(sdf.format(getEvent().getFinalData()));
+		builder.append("\nEndereço\nRua: ");
+		builder.append(getEvent().getAddress().getStreet());
+		builder.append("\nEndereço\nRua: ");
+		builder.append(getEvent().getAddress().getStreet());
+		builder.append(", número : ");
+		builder.append(getEvent().getAddress().getNumber());
+		builder.append(", CEP : ");
+		builder.append(getEvent().getAddress().getCep());
+		builder.append(", Bairro : ");
+		builder.append(getEvent().getAddress().getNeighborhooh());
+		builder.append(", Cidade : ");
+		builder.append(getEvent().getAddress().getCity().getName());
+		builder.append(", Estado : ");
+		builder.append(getEvent().getAddress().getCity().getState().getName());
+		builder.append("\nQuantidade : ");
+		builder.append(getAmount());
+		builder.append(", Preço : ");
+		builder.append(nf.format(getPrice()));
+		builder.append(", Total R$: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
+	}
+
 }

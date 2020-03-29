@@ -1,8 +1,11 @@
 package com.talissonmelo.projectevent.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -121,5 +124,32 @@ public class Order implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número : ");
+		builder.append(getId());
+		builder.append(", Instante: ");
+		builder.append(sdf.format(getInstant()));
+		builder.append(", Cliente: ");
+		builder.append(getUser().getName());
+		builder.append(", Situação de Pagamento: ");
+		builder.append(getPayment().getStatus().getText());
+		builder.append("\nDetalhes do Evento\n");
+		for(Ticket ticket: getTickets()) {
+			builder.append(ticket.toString());
+		}
+		builder.append("Valor Total: ");
+		builder.append(nf.format(getValueTotal()));
+		
+		return builder.toString();
+	}
+	
+	
 
 }
