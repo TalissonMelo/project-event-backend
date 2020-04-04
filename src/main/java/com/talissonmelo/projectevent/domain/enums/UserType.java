@@ -2,8 +2,8 @@ package com.talissonmelo.projectevent.domain.enums;
 
 public enum UserType {
 	
-	PHYSICS(1, "Pessoa Fisíca"),
-	LEGAL(2, "Pessoa Juridíca");
+	PHYSICS(0, "Pessoa Fisíca"),
+	LEGAL(1, "Pessoa Juridíca");
 	
 	private Integer cod;
 	private String text;

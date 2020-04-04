@@ -2,8 +2,8 @@ package com.talissonmelo.projectevent.domain.enums;
 
 public enum EventType {
 	
-	PUBLIC(1, "Publico"),
-	PRIVATE(2, "Privado");
+	PUBLIC(0, "Publico"),
+	PRIVATE(1, "Privado");
 	
 	private Integer cod;
 	private String text;

@@ -2,9 +2,9 @@ package com.talissonmelo.projectevent.domain.enums;
 
 public enum StatusPayment {
 
-	PAID(1, "Pago"), 
-	AWAITING_PAYMENT(2, "Aguardando Pagamento"), 
-	CANCELED(3, "Cancelado");
+	PAID(0, "Pago"), 
+	AWAITING_PAYMENT(1, "Aguardando Pagamento"), 
+	CANCELED(2, "Cancelado");
 
 	private Integer cod;
 	private String text;
