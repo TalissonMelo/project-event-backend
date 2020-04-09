@@ -37,7 +37,5 @@ public enum EventType {
 		throw new IllegalArgumentException("Enum não encontrado : " + cod);
 		
 	}
-	
-	
 
 }

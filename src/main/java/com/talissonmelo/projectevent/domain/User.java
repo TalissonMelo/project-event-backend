@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.talissonmelo.projectevent.domain.enums.UserType;
 
 @Entity
@@ -26,6 +27,8 @@ public class User implements Serializable {
 	private Integer userType;
 	private String CpfCnpj;
 	private String phone;
+	
+	@JsonIgnore
 	private String password;
 	
 	@OneToMany(mappedBy = "user")
