@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:remove="all">Order Confirmation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div>
+		<h1>
+			Ingresso número: <span th:text="${payment.id}" style="text-align: center"> </span>
+		</h1>	
+		
+		<h3>
+			Status do Pagamento : <span th:text="${payment.status.text}"  style="text-align: center" > </span>
+		</h3>		
+	</div>
+</body>
+</html>

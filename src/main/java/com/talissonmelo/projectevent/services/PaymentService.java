@@ -16,6 +16,9 @@ public class PaymentService {
 	@Autowired
 	private PaymentRepository repository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public Payment findById(Integer id) {
 		Optional<Payment> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Pagamento não encontrado: Id : " + id) );
@@ -24,6 +27,7 @@ public class PaymentService {
 	public Payment update(Integer id ,UpdateStatusDTO dto) {
 		Payment entity = repository.getOne(id);
 		entity.setStatus(dto.getStatus());
+		emailService.sendOrderConfirmationHtmlEmail(entity);
 		return repository.save(entity);
 		
 	}
