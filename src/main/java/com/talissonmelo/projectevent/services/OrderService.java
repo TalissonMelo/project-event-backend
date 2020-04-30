@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +53,7 @@ public class OrderService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(id) );
 	}
 	
+	@Transactional
 	public Order insert(Order obj) {
 		orderRepository.save(obj);
 		paymentRepository.save(obj.getPayment());

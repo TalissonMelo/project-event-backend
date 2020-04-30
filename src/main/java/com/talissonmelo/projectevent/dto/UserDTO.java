@@ -5,8 +5,11 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.talissonmelo.projectevent.domain.enums.UserType;
 
+@JsonInclude(value = Include.NON_NULL)
 public class UserDTO {
 
 	private Integer id;

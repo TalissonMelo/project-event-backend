@@ -1,5 +1,6 @@
 package com.talissonmelo.projectevent.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,5 +102,20 @@ public class UserService {
 		user.setPassword(objDto.getPassword());
 		
 		return user;
+	}
+	
+	public List<UserDTO> toDTO(List<User> users ){
+		List<UserDTO> userDTO = new ArrayList<>();
+		
+		for(User user: users) {
+			UserDTO dto = new UserDTO();
+			dto.setId(user.getId());
+			dto.setName(user.getName());
+			dto.setEmail(user.getEmail());
+			dto.setPhone(user.getPhone());
+			userDTO.add(dto);
+		}
+		
+		return userDTO;
 	}
 }

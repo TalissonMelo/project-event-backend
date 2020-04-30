@@ -7,6 +7,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -68,6 +69,8 @@ public abstract class AbstractEmailService implements EmailService {
 		mmh.setSubject("Pagamento Confirmado!. Codigo : " + obj.getId());
 		mmh.setSentDate(new Date(System.currentTimeMillis()));
 		mmh.setText(htmlFromTemplatePayment(obj), true);
+		
+		mmh.addInline("img", new ClassPathResource("templates/email/event.png") );
 		return message;
 	}
 }

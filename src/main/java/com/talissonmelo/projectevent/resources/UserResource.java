@@ -31,9 +31,10 @@ public class UserResource {
 	private UserService userService;
 
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
+	public ResponseEntity<List<UserDTO>> findAll() {
 		List<User> list = userService.findAll();
-		return ResponseEntity.ok().body(list);
+		List<UserDTO> users = userService.toDTO(list);
+		return ResponseEntity.ok().body(users);
 	}
 
 	@GetMapping(value = "/{id}")
@@ -49,7 +50,7 @@ public class UserResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticate(@RequestBody UserAuthenticateDTO objDTO) {
 		try {
@@ -66,9 +67,9 @@ public class UserResource {
 		userService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@Valid @PathVariable Integer id, @RequestBody UserDTO objDTO){
+	public ResponseEntity<User> update(@Valid @PathVariable Integer id, @RequestBody UserDTO objDTO) {
 		User obj = userService.fromDTO(objDTO);
 		obj.setId(id);
 		User entity = userService.update(id, obj);
