@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.dto.EventDTO;
 import com.talissonmelo.projectevent.dto.EventNewDTO;
+import com.talissonmelo.projectevent.dto.EventViewDTO;
 import com.talissonmelo.projectevent.services.EventService;
 
 @RestController
@@ -29,10 +30,11 @@ public class EventResource {
 
 	@Autowired
 	private EventService eventService;
-
+	
 	@GetMapping
-	public ResponseEntity<List<Event>> findAll(@RequestParam(value = "name" , required = false) String name) {
-
+	public ResponseEntity<List<Event>> findAll(
+			@RequestParam(value = "name" , required = false) String name) {
+				
 		Event eventFilter = new Event();
 		eventFilter.setName(name);
 		
@@ -41,9 +43,10 @@ public class EventResource {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Event> findById(@PathVariable Integer id) {
+	public ResponseEntity<EventViewDTO> findById(@PathVariable Integer id) {
 		Event event = eventService.findById(id);
-		return ResponseEntity.ok().body(event);
+		EventViewDTO dto = eventService.toView(event);
+		return ResponseEntity.ok().body(dto);
 	}
 	
 	@DeleteMapping(value  = "/{id}")

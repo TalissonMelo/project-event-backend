@@ -21,6 +21,7 @@ import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.dto.EventDTO;
 import com.talissonmelo.projectevent.dto.EventNewDTO;
+import com.talissonmelo.projectevent.dto.EventViewDTO;
 import com.talissonmelo.projectevent.repositories.AddressRepository;
 import com.talissonmelo.projectevent.repositories.EventRepository;
 import com.talissonmelo.projectevent.services.exceptions.DataBaseException;
@@ -145,5 +146,25 @@ public class EventService {
 		user.getEvents().addAll(Arrays.asList(obj));
 		
 		return obj;
+	}
+
+	public EventViewDTO toView(Event event) {
+		EventViewDTO dto = new EventViewDTO();
+		
+		dto.setId(event.getId());
+		dto.setName(event.getName());
+		dto.setDescription(event.getDescription());
+		dto.setInitialData(event.getInitialData());
+		dto.setFinalData(event.getFinalData());
+		dto.setPrice(event.getPrice());
+		dto.setType(event.getType().getCod());
+		dto.setNeighborhooh(event.getAddress().getNeighborhooh());
+		dto.setComplement(event.getAddress().getComplement());
+		dto.setStreet(event.getAddress().getStreet());
+		dto.setNumber(event.getAddress().getNumber());
+		dto.setCep(event.getAddress().getCep());
+		dto.setCidadeId(event.getAddress().getCity().getId());
+		
+		return dto;
 	}
 }
