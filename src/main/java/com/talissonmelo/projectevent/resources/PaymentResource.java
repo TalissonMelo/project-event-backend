@@ -14,7 +14,7 @@ import com.talissonmelo.projectevent.dto.UpdateStatusDTO;
 import com.talissonmelo.projectevent.services.PaymentService;
 
 @Controller
-@RequestMapping(value = "/payment")
+@RequestMapping(value = "/payments")
 public class PaymentResource {
 
 	@Autowired
