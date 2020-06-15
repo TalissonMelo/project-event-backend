@@ -16,7 +16,7 @@ Podendo usar também  IDE "Eclipse IDE for Enterprise Java Developers." - vers�
 ## Como replicar o projeto em meu ambiente de execução?
 Faça o download do projeto e abra-o na IDE Spring Tool Suite ou eclipse.
 
-A seguir, com o banco Mysql rodando, crie um database com o nome "event", ou simplesmente utilize o database H2 que gera um banco em memoria. Caso queira alterar as configurações de acesso ao banco isso pode ser feito alterando o arquivo application.properties.
+A seguir, com o banco Mysql rodando, ou simplesmente utilize o database H2 que gera um banco em memoria. Caso queira alterar as configurações de acesso ao banco isso pode ser feito alterando o arquivo application.properties.
 
 ##### spring.profiles.active=test -> Utiliza o banco H2 
 ##### Acesso ao banco H2 http://localhost:8080/h2-console
