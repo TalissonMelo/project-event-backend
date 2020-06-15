@@ -59,8 +59,8 @@ public class DBService {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		User user1 = new User(null, "Talisson Melo", "talisson.cursos@gmail.com", UserType.PHYSICS, "12345678","3242-3414", "123456");
-		User user2 = new User(null, "Tales", "tales.cursos@gmail.com", UserType.LEGAL, "12345008", "3242-3415", "123456");
+		User user1 = new User(null, "Patrick", "patrickferdinan@gmail.com", UserType.PHYSICS, "12345678","5534991136428", "123456");
+		User user2 = new User(null, "Talisson", "talisson.cursos@gmail.com", UserType.LEGAL, "12345008", "992319208", "123456");
 
 		State st1 = new State(null, "Minas Gerais");
 		State st2 = new State(null, "São Paulo");
@@ -83,7 +83,7 @@ public class DBService {
 		Event ev1 = new Event(null, "Apresentação Pi", "Apresentação dos Trabalhos de término de período.",
 				sdf.parse("01/06/2020 19:15:00"), sdf.parse("01/06/2020 22:40:00"), 50.00, EventType.PUBLIC ,ad1, user1);
 		Event ev2 = new Event(null, "Bienal de ideias", "Apresentação dos Trabalhos", sdf.parse("01/08/2020 19:15:00"),
-				sdf.parse("01/08/2020 22:40:00"), 80.00, EventType.PRIVATE, ad1, user2);
+				sdf.parse("01/08/2020 22:40:00"), 80.00, EventType.PUBLIC, ad1, user2);
 		
 		ev2.getParticipants().addAll(Arrays.asList("123.123.123-12","113.123.123-12","133.123.123-12","143.123.123-12","153.123.123-12"));
 

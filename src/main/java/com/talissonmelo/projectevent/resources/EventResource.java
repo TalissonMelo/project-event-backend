@@ -22,6 +22,7 @@ import com.talissonmelo.projectevent.domain.Event;
 import com.talissonmelo.projectevent.dto.EventDTO;
 import com.talissonmelo.projectevent.dto.EventNewDTO;
 import com.talissonmelo.projectevent.dto.EventViewDTO;
+import com.talissonmelo.projectevent.dto.UserEventDTO;
 import com.talissonmelo.projectevent.services.EventService;
 
 @RestController
@@ -70,4 +71,12 @@ public class EventResource {
 		Event entity = eventService.update(id, obj);
 		return ResponseEntity.ok().body(entity);
 	}
+	
+	@GetMapping(value = "/users")
+	public ResponseEntity<List<UserEventDTO>> findUserEvent(){
+		List<Event> list = eventService.findAll();
+		List<UserEventDTO> listDTO = eventService.toUserEventDTO(list);
+		return ResponseEntity.ok().body(listDTO);
+	}
+
 }

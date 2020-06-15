@@ -3,6 +3,8 @@
 ### Descrição do projeto
 
 Este projeto tem como objetivo demonstrar a aplicabilidade das seguintes tecnologias: Spring boot, Spring Rest, Spring data JPA, Spring MVC entre outros projetos do ecossistema Spring.
+![mc2](https://github.com/TalissonMelo/project-event-backend/blob/master/mc2.png)
+
 
 ## Modelo Conceitual
 ![mc](https://github.com/TalissonMelo/project-event-backend/blob/master/mc.png)

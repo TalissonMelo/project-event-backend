@@ -1,5 +1,6 @@
 package com.talissonmelo.projectevent.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,7 @@ import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.dto.EventDTO;
 import com.talissonmelo.projectevent.dto.EventNewDTO;
 import com.talissonmelo.projectevent.dto.EventViewDTO;
+import com.talissonmelo.projectevent.dto.UserEventDTO;
 import com.talissonmelo.projectevent.repositories.AddressRepository;
 import com.talissonmelo.projectevent.repositories.EventRepository;
 import com.talissonmelo.projectevent.services.exceptions.DataBaseException;
@@ -49,6 +51,10 @@ public class EventService {
 
 		List<Event> list = eventRepository.findAll(example);
 		return list;
+	}
+
+	public List<Event> findAll() {
+		return eventRepository.findAll();
 	}
 
 	public Event findById(Integer id) {
@@ -111,7 +117,7 @@ public class EventService {
 	public Event fromDTO(EventNewDTO objDTO) {
 
 		User user = userService.findById(objDTO.getUser());
-		
+
 		City city = cityService.findById(objDTO.getCidadeId());
 
 		Address address = new Address();
@@ -122,7 +128,6 @@ public class EventService {
 		address.setNumber(objDTO.getNumber());
 		address.setCep(objDTO.getCep());
 		address.setCity(city);
-		
 
 		Event obj = new Event();
 		obj.setId(null);
@@ -135,22 +140,22 @@ public class EventService {
 		obj.setAddress(address);
 
 		if (objDTO.getParticipants() != null) {
-			
+
 			String[] fields = objDTO.getParticipants().split(" ");
-			for(String x: fields) {
-			obj.getParticipants().add(x);
+			for (String x : fields) {
+				obj.getParticipants().add(x);
 			}
 		}
-		
+
 		obj.setUser(user);
 		user.getEvents().addAll(Arrays.asList(obj));
-		
+
 		return obj;
 	}
 
 	public EventViewDTO toView(Event event) {
 		EventViewDTO dto = new EventViewDTO();
-		
+
 		dto.setId(event.getId());
 		dto.setName(event.getName());
 		dto.setDescription(event.getDescription());
@@ -164,7 +169,27 @@ public class EventService {
 		dto.setNumber(event.getAddress().getNumber());
 		dto.setCep(event.getAddress().getCep());
 		dto.setCidadeId(event.getAddress().getCity().getId());
-		
+
 		return dto;
+	}
+
+	public List<UserEventDTO> toUserEventDTO(List<Event> list) {
+		List<UserEventDTO> listDTO = new ArrayList<>();
+		
+		for(Event event : list) {
+			UserEventDTO dto = new UserEventDTO();
+			dto.setUser(event.getUser().getName());
+			dto.setEmail(event.getUser().getEmail());
+			dto.setPhone(event.getUser().getPhone());
+			dto.setNameEvent(event.getName());
+			dto.setInitialData(event.getInitialData());
+			dto.setFinalData(event.getFinalData());
+			dto.setPrice(event.getPrice());
+			
+			listDTO.add(dto);
+		}
+		
+		return listDTO;
+		
 	}
 }
