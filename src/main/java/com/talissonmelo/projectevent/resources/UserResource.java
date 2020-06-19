@@ -2,9 +2,11 @@ package com.talissonmelo.projectevent.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.dto.UserAuthenticateDTO;
 import com.talissonmelo.projectevent.dto.UserDTO;
+import com.talissonmelo.projectevent.dto.UserListDTO;
 import com.talissonmelo.projectevent.services.UserService;
 import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
 
@@ -29,11 +32,14 @@ public class UserResource {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@GetMapping
-	public ResponseEntity<List<UserDTO>> findAll() {
+	public ResponseEntity<List<UserListDTO>> findAll() {
 		List<User> list = userService.findAll();
-		List<UserDTO> users = userService.toDTO(list);
+		List<UserListDTO> users = toCollectionModel(list);
 		return ResponseEntity.ok().body(users);
 	}
 
@@ -45,7 +51,7 @@ public class UserResource {
 
 	@PostMapping
 	public ResponseEntity<User> insert(@Valid @RequestBody UserDTO objDTO) {
-		User obj = userService.fromDTO(objDTO);
+		User obj = toEntity(objDTO);
 		userService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
@@ -70,10 +76,21 @@ public class UserResource {
 
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<User> update(@Valid @PathVariable Integer id, @RequestBody UserDTO objDTO) {
-		User obj = userService.fromDTO(objDTO);
-		obj.setId(id);
+		User obj = toEntity(objDTO);
 		User entity = userService.update(id, obj);
 		return ResponseEntity.ok().body(entity);
 	}
+
+	private User toEntity(UserDTO objDTO) {
+		return mapper.map(objDTO, User.class);
+	}
 	
+	private UserListDTO toModelMapper(User user) {
+		return mapper.map(user, UserListDTO.class);
+	}
+	
+	private List<UserListDTO> toCollectionModel(List<User> users){
+		return users.stream().map(user -> toModelMapper(user)).collect(Collectors.toList());
+				
+	}
 }
