@@ -1,6 +1,5 @@
 package com.talissonmelo.projectevent.services;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,6 @@ import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.dto.EventDTO;
 import com.talissonmelo.projectevent.dto.EventNewDTO;
 import com.talissonmelo.projectevent.dto.EventViewDTO;
-import com.talissonmelo.projectevent.dto.UserEventDTO;
 import com.talissonmelo.projectevent.repositories.AddressRepository;
 import com.talissonmelo.projectevent.repositories.EventRepository;
 import com.talissonmelo.projectevent.services.exceptions.DataBaseException;
@@ -171,25 +169,5 @@ public class EventService {
 		dto.setCidadeId(event.getAddress().getCity().getId());
 
 		return dto;
-	}
-
-	public List<UserEventDTO> toUserEventDTO(List<Event> list) {
-		List<UserEventDTO> listDTO = new ArrayList<>();
-		
-		for(Event event : list) {
-			UserEventDTO dto = new UserEventDTO();
-			dto.setUser(event.getUser().getName());
-			dto.setEmail(event.getUser().getEmail());
-			dto.setPhone(event.getUser().getPhone());
-			dto.setNameEvent(event.getName());
-			dto.setInitialData(event.getInitialData());
-			dto.setFinalData(event.getFinalData());
-			dto.setPrice(event.getPrice());
-			
-			listDTO.add(dto);
-		}
-		
-		return listDTO;
-		
 	}
 }

@@ -6,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class UserEventDTO {
 
-	private String user;
-	private String email;
-	private String phone;
-	private String nameEvent;
-	
+	private String userName;
+	private String userEmail;
+	private String userPhone;
+	private String name;
+
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
 	private Date initialData;
 
@@ -18,53 +18,53 @@ public class UserEventDTO {
 	private Date finalData;
 
 	private Double price;
-	
+
 	public UserEventDTO() {
-		
+
 	}
 
-	public UserEventDTO(String user, String email, String phone, String nameEvent, Date initialData, Date finalData,
-			Double price) {
+	public UserEventDTO(String userName, String userEmail, String userPhone, String name, Date initialData,
+			Date finalData, Double price) {
 		super();
-		this.user = user;
-		this.email = email;
-		this.phone = phone;
-		this.nameEvent = nameEvent;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.userPhone = userPhone;
+		this.name = name;
 		this.initialData = initialData;
 		this.finalData = finalData;
 		this.price = price;
 	}
 
-	public String getUser() {
-		return user;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getUserPhone() {
+		return userPhone;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
 	}
 
-	public String getNameEvent() {
-		return nameEvent;
+	public String getName() {
+		return name;
 	}
 
-	public void setNameEvent(String nameEvent) {
-		this.nameEvent = nameEvent;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getInitialData() {
@@ -90,4 +90,5 @@ public class UserEventDTO {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
 }

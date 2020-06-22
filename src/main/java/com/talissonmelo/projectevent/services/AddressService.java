@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -49,18 +50,10 @@ public class AddressService {
 	public Address update(Integer id, Address obj) {
 		try {
 		Address entity = addressRepository.getOne(id);
-		updateData(entity, obj);
+		BeanUtils.copyProperties(obj, entity, "id");
 		return addressRepository.save(entity);
 		}catch (EntityNotFoundException e) {
 			throw new ObjectNotFoundException(id);
 		}
-	}
-
-	private void updateData(Address entity, Address obj) {
-
-		entity.setNeighborhooh(obj.getNeighborhooh());
-		entity.setStreet(obj.getStreet());
-		entity.setNumber(obj.getNumber());
-
 	}
 }

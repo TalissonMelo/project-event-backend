@@ -2,9 +2,11 @@ package com.talissonmelo.projectevent.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +33,9 @@ public class EventResource {
 
 	@Autowired
 	private EventService eventService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@GetMapping
 	public ResponseEntity<List<Event>> findAll(
@@ -75,8 +80,16 @@ public class EventResource {
 	@GetMapping(value = "/users")
 	public ResponseEntity<List<UserEventDTO>> findUserEvent(){
 		List<Event> list = eventService.findAll();
-		List<UserEventDTO> listDTO = eventService.toUserEventDTO(list);
+		List<UserEventDTO> listDTO = toListModel(list);
 		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	private UserEventDTO toModel(Event event) {
+		return modelMapper.map(event, UserEventDTO.class);
+	}
+	
+	private List<UserEventDTO> toListModel(List<Event> events){
+		return events.stream().map(event -> toModel(event)).collect(Collectors.toList());
 	}
 
 }
