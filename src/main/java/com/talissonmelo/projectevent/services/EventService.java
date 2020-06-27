@@ -57,7 +57,6 @@ public class EventService {
 
 	public Event findById(Integer id) {
 		Optional<Event> event = eventRepository.findById(id);
-		// return event.get();
 		return event.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Event.class.getName()));
 	}
