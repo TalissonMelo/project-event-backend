@@ -22,27 +22,29 @@ import com.talissonmelo.projectevent.services.OrderService;
 @RestController
 @RequestMapping(value = "/orders")
 public class OrderResource {
-	
+
 	@Autowired
 	private OrderService orderService;
-	
+
 	@GetMapping
-	public ResponseEntity<List<Order>> findAll(){
+	public ResponseEntity<List<Order>> findAll() {
 		List<Order> list = orderService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Order> findById(@PathVariable Integer id){
+	public ResponseEntity<Order> findById(@PathVariable Integer id) {
 		Order obj = orderService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Order> insert(@Valid @RequestBody OrderDTO objDTO) {
-		Order obj = orderService.fromDTO(objDTO);
-		orderService.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+			orderService.cpfCnpj(objDTO.getEvent(), objDTO.getUser());
+			Order obj = orderService.fromDTO(objDTO);
+			orderService.insert(obj);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId())
+					.toUri();
+			return ResponseEntity.created(uri).body(obj);
 	}
 }

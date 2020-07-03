@@ -20,16 +20,14 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
 
-		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(),
-				System.currentTimeMillis());
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
 	
 	@ExceptionHandler(DataBaseException.class)
 	public ResponseEntity<StandardError> database(DataBaseException e, HttpServletRequest request) {
 
-		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
-				System.currentTimeMillis());
+		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 	
@@ -37,8 +35,7 @@ public class ResourceExceptionHandler {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 
-		ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Error Validation!",
-				System.currentTimeMillis());
+		ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Error Validation!");
 		
 		//Percorrer lista de erros da excecao 
 		for(FieldError x : e.getBindingResult().getFieldErrors()) {

@@ -127,10 +127,10 @@ public class Order implements Serializable {
 
 	@Override
 	public String toString() {
-		
+
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		
+
 		StringBuilder builder = new StringBuilder();
 		builder.append("Pedido número : ");
 		builder.append(getId());
@@ -141,15 +141,12 @@ public class Order implements Serializable {
 		builder.append(", Situação de Pagamento: ");
 		builder.append(getPayment().getStatus().getText());
 		builder.append("\nDetalhes do Evento\n");
-		for(Ticket ticket: getTickets()) {
+		for (Ticket ticket : getTickets()) {
 			builder.append(ticket.toString());
 		}
 		builder.append("Valor Total: ");
 		builder.append(nf.format(getValueTotal()));
-		
+
 		return builder.toString();
 	}
-	
-	
-
 }
