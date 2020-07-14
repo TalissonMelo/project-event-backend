@@ -3,7 +3,9 @@ package com.talissonmelo.projectevent.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private EntityManager entityManager;
 
 	public List<User> findAll() {
 		List<User> list = userRepository.findAll();
@@ -34,15 +39,15 @@ public class UserService {
 	}
 
 	public User insert(User obj) {
-		validateEmail(obj.getEmail());
-		return userRepository.save(obj);
-	}
-	
-	public void validateEmail(String email) {
-		boolean exists = userRepository.existsByEmail(email);
-		if(exists) {
-			throw new DataBaseException("Já existe um usuário cadastrado com este email!.");
+
+		entityManager.detach(obj);
+		Optional<User> user = userRepository.findByEmail(obj.getEmail());
+
+		if (user.isPresent() && !user.get().equals(obj)) {
+			throw new ObjectNotFoundException("Já existe um usuário cadastrado com este email.");
 		}
+
+		return userRepository.save(obj);
 	}
 
 	public void delete(Integer id) {
@@ -54,19 +59,6 @@ public class UserService {
 			throw new DataBaseException("Usuário não pode ser deletado. " + e.getMessage());
 		}
 	}
-	
-	public User authenticate(String email, String password) {
-		Optional<User> user = userRepository.findByEmail(email);
-		
-		if(!user.isPresent()) {
-			throw new ObjectNotFoundException("Usuário não encontrado!.");
-		}
-		
-		if(!user.get().getPassword().equals(password)) {
-			throw new ObjectNotFoundException("Senha inválida!.");
-		}
-		return user.get();
-	}
 
 	public User update(Integer id, User obj) {
 		try {
@@ -76,5 +68,16 @@ public class UserService {
 		} catch (EntityNotFoundException e) {
 			throw new ObjectNotFoundException(id);
 		}
+	}
+	
+	@Transactional
+	public void updatePassword(Integer id, String password , String newPassword) {
+		User user = findById(id);
+		
+		if(!user.getPassword().equals(password)) {
+			throw new ObjectNotFoundException("Senha atual informada não coincide com a senha do usuário.");
+		}
+		
+		user.setPassword(newPassword);
 	}
 }

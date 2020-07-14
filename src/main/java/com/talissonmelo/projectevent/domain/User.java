@@ -120,6 +120,13 @@ public class User implements Serializable {
 		this.orders = orders;
 	}
 
+	public boolean passwordEqualsTo(String password) {
+	    return getPassword().equals(password);
+	}
+
+	public boolean passwordNotEqualsTo(String password) {
+	    return !passwordEqualsTo(password);
+	}
 
 	@Override
 	public int hashCode() {

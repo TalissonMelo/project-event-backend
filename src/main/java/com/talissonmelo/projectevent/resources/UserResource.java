@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.projectevent.domain.User;
-import com.talissonmelo.projectevent.dto.UserAuthenticateDTO;
+import com.talissonmelo.projectevent.dto.UpdatePassword;
 import com.talissonmelo.projectevent.dto.UserDTO;
 import com.talissonmelo.projectevent.dto.UserListDTO;
 import com.talissonmelo.projectevent.services.UserService;
-import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -57,17 +56,6 @@ public class UserResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 
-	@PostMapping("/login")
-	public ResponseEntity<?> authenticate(@RequestBody UserAuthenticateDTO objDTO) {
-		try {
-			User user = userService.authenticate(objDTO.getEmail(), objDTO.getPassword());
-			return ResponseEntity.ok().body(user);
-		} catch (ObjectNotFoundException e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-
-	}
-
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		userService.delete(id);
@@ -80,9 +68,15 @@ public class UserResource {
 		User entity = userService.update(id, obj);
 		return ResponseEntity.ok().body(entity);
 	}
+	
+	@PutMapping(value = "/{id}/password")
+	public ResponseEntity<Void> updatePassword(@PathVariable Integer id, @Valid @RequestBody UpdatePassword updatePassword ){
+		userService.updatePassword(id, updatePassword.getPassword(), updatePassword.getNewPassword());
+		return ResponseEntity.noContent().build();
+	}
 
-	private User toEntity(UserDTO objDTO) {
-		return mapper.map(objDTO, User.class);
+	private User toEntity(UserDTO userDTO) {
+		return mapper.map(userDTO, User.class);
 	}
 	
 	private UserListDTO toModelMapper(User user) {
