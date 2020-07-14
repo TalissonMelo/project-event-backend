@@ -70,6 +70,19 @@ public class UserService {
 		}
 	}
 	
+	public User authenticate(String email, String password) {
+		Optional<User> user = userRepository.findByEmail(email);
+		
+		if(!user.isPresent()) {
+			throw new ObjectNotFoundException("Usuário não encontrado!.");
+		}
+		
+		if(!user.get().getPassword().equals(password)) {
+			throw new ObjectNotFoundException("Senha inválida!.");
+		}
+		return user.get();
+	}
+	
 	@Transactional
 	public void updatePassword(Integer id, String password , String newPassword) {
 		User user = findById(id);

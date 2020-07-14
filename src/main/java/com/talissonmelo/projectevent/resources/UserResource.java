@@ -21,9 +21,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.talissonmelo.projectevent.domain.User;
 import com.talissonmelo.projectevent.dto.UpdatePassword;
+import com.talissonmelo.projectevent.dto.UserAuthenticateDTO;
 import com.talissonmelo.projectevent.dto.UserDTO;
 import com.talissonmelo.projectevent.dto.UserListDTO;
 import com.talissonmelo.projectevent.services.UserService;
+import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -67,6 +69,17 @@ public class UserResource {
 		User obj = toEntity(objDTO);
 		User entity = userService.update(id, obj);
 		return ResponseEntity.ok().body(entity);
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> authenticate(@RequestBody UserAuthenticateDTO objDTO) {
+		try {
+			User user = userService.authenticate(objDTO.getEmail(), objDTO.getPassword());
+			return ResponseEntity.ok().body(user);
+		} catch (ObjectNotFoundException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+
 	}
 	
 	@PutMapping(value = "/{id}/password")
