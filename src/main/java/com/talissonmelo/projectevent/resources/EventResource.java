@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,6 +28,9 @@ import com.talissonmelo.projectevent.dto.EventDTO;
 import com.talissonmelo.projectevent.dto.EventNewDTO;
 import com.talissonmelo.projectevent.dto.EventViewDTO;
 import com.talissonmelo.projectevent.dto.UserEventDTO;
+import com.talissonmelo.projectevent.dto.filter.EventFilter;
+import com.talissonmelo.projectevent.repositories.EventRepository;
+import com.talissonmelo.projectevent.repositories.spec.EventSpec;
 import com.talissonmelo.projectevent.services.EventService;
 
 @RestController
@@ -37,20 +39,18 @@ public class EventResource {
 
 	@Autowired
 	private EventService eventService;
-	
+
+	@Autowired
+	private EventRepository repository;
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@GetMapping
-	public Page<Event> findAll(
-			@RequestParam(value = "name" , required = false) String name,
-			@PageableDefault(size = 10) Pageable pageable) {
-				
-		Event eventFilter = new Event();
-		eventFilter.setName(name);
-		
-		Page<Event> event = eventService.findAll(eventFilter, pageable);
-		return  new PageImpl<>(event.getContent(), pageable, event.getTotalElements());
+	public Page<Event> findAll(EventFilter filter, @PageableDefault(size = 10) Pageable pageable) {
+		Page<Event> events = repository.findAll(EventSpec.usingFilter(filter), pageable);
+		return new PageImpl<>(events.getContent(), pageable, events.getTotalElements());
+
 	}
 
 	@GetMapping(value = "/{id}")
@@ -59,13 +59,13 @@ public class EventResource {
 		EventViewDTO dto = eventService.toView(event);
 		return ResponseEntity.ok().body(dto);
 	}
-	
-	@DeleteMapping(value  = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id){
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		eventService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Event> insert(@Valid @RequestBody EventNewDTO objDTO) {
 		Event obj = eventService.fromDTO(objDTO);
@@ -73,27 +73,27 @@ public class EventResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Event> update(@Valid @PathVariable Integer id, @RequestBody EventDTO objDTO){
+	public ResponseEntity<Event> update(@Valid @PathVariable Integer id, @RequestBody EventDTO objDTO) {
 		Event obj = eventService.fromDTO(objDTO);
 		obj.setId(id);
 		Event entity = eventService.update(id, obj);
 		return ResponseEntity.ok().body(entity);
 	}
-	
+
 	@GetMapping(value = "/users")
-	public ResponseEntity<List<UserEventDTO>> findUserEvent(){
+	public ResponseEntity<List<UserEventDTO>> findUserEvent() {
 		List<Event> list = eventService.findAll();
 		List<UserEventDTO> listDTO = toListModel(list);
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
+
 	private UserEventDTO toModel(Event event) {
 		return modelMapper.map(event, UserEventDTO.class);
 	}
-	
-	private List<UserEventDTO> toListModel(List<Event> events){
+
+	private List<UserEventDTO> toListModel(List<Event> events) {
 		return events.stream().map(event -> toModel(event)).collect(Collectors.toList());
 	}
 

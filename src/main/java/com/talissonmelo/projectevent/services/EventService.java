@@ -10,11 +10,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.StringMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.talissonmelo.projectevent.domain.Address;
@@ -43,15 +38,6 @@ public class EventService {
 
 	@Autowired
 	private CityService cityService;
-
-	public Page<Event> findAll(Event eventFilter, Pageable pageable) {
-
-		Example<Event> example = Example.of(eventFilter,
-				ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
-
-		Page<Event> list = eventRepository.findAll(example, pageable);
-		return list;
-	}
 
 	public List<Event> findAll() {
 		return eventRepository.findAll();
