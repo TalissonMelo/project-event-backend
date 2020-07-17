@@ -8,6 +8,10 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,14 +42,15 @@ public class EventResource {
 	private ModelMapper modelMapper;
 	
 	@GetMapping
-	public ResponseEntity<List<Event>> findAll(
-			@RequestParam(value = "name" , required = false) String name) {
+	public Page<Event> findAll(
+			@RequestParam(value = "name" , required = false) String name,
+			@PageableDefault(size = 10) Pageable pageable) {
 				
 		Event eventFilter = new Event();
 		eventFilter.setName(name);
 		
-		List<Event> list = eventService.findAll(eventFilter);
-		return ResponseEntity.ok().body(list);
+		Page<Event> event = eventService.findAll(eventFilter, pageable);
+		return  new PageImpl<>(event.getContent(), pageable, event.getTotalElements());
 	}
 
 	@GetMapping(value = "/{id}")

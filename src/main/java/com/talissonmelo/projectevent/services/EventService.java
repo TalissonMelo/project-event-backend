@@ -13,6 +13,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.talissonmelo.projectevent.domain.Address;
@@ -42,12 +44,12 @@ public class EventService {
 	@Autowired
 	private CityService cityService;
 
-	public List<Event> findAll(Event eventFilter) {
+	public Page<Event> findAll(Event eventFilter, Pageable pageable) {
 
 		Example<Event> example = Example.of(eventFilter,
 				ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
 
-		List<Event> list = eventRepository.findAll(example);
+		Page<Event> list = eventRepository.findAll(example, pageable);
 		return list;
 	}
 
