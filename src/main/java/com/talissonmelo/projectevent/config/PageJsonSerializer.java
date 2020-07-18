@@ -4,11 +4,13 @@ import java.io.IOException;
 
 import org.springframework.boot.jackson.JsonComponent;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+@Component
 @JsonComponent
 public class PageJsonSerializer extends JsonSerializer<Page<?>> {
 
