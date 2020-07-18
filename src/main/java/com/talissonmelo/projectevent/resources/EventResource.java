@@ -48,9 +48,8 @@ public class EventResource {
 
 	@GetMapping
 	public Page<Event> findAll(EventFilter filter, @PageableDefault(size = 10) Pageable pageable) {
-		Page<Event> events = repository.findAll(EventSpec.usingFilter(filter), pageable);
-		return new PageImpl<>(events.getContent(), pageable, events.getTotalElements());
-
+		Page<Event> eventspages = repository.findAll(EventSpec.usingFilter(filter), pageable);
+		return new PageImpl<>(eventspages.getContent(), pageable, eventspages.getTotalElements());
 	}
 
 	@GetMapping(value = "/{id}")
