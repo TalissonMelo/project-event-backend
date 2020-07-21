@@ -23,7 +23,7 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private EntityManager entityManager;
 
@@ -63,34 +63,34 @@ public class UserService {
 	public User update(Integer id, User obj) {
 		try {
 			User entity = userRepository.getOne(id);
-			BeanUtils.copyProperties(obj, entity, "id");
+			BeanUtils.copyProperties(obj, entity, "id", "password");
 			return userRepository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ObjectNotFoundException(id);
 		}
 	}
-	
+
 	public User authenticate(String email, String password) {
 		Optional<User> user = userRepository.findByEmail(email);
-		
-		if(!user.isPresent()) {
+
+		if (!user.isPresent()) {
 			throw new ObjectNotFoundException("Usuário não encontrado!.");
 		}
-		
-		if(!user.get().getPassword().equals(password)) {
+
+		if (!user.get().getPassword().equals(password)) {
 			throw new ObjectNotFoundException("Senha inválida!.");
 		}
 		return user.get();
 	}
-	
+
 	@Transactional
-	public void updatePassword(Integer id, String password , String newPassword) {
+	public void updatePassword(Integer id, String password, String newPassword) {
 		User user = findById(id);
-		
-		if(!user.getPassword().equals(password)) {
+
+		if (!user.getPassword().equals(password)) {
 			throw new ObjectNotFoundException("Senha atual informada não coincide com a senha do usuário.");
 		}
-		
+
 		user.setPassword(newPassword);
 	}
 }

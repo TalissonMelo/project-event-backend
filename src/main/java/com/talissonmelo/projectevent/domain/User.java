@@ -27,6 +27,7 @@ public class User implements Serializable {
 	private Integer userType;
 	private String CpfCnpj;
 	private String phone;
+	private String photo;
 	
 	@JsonIgnore
 	private String password;
@@ -126,6 +127,14 @@ public class User implements Serializable {
 
 	public boolean passwordNotEqualsTo(String password) {
 	    return !passwordEqualsTo(password);
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	@Override
