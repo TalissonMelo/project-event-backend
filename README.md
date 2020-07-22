@@ -7,7 +7,7 @@ Este projeto tem como objetivo demonstrar a aplicabilidade das seguintes tecnolo
 ![mc2](https://github.com/TalissonMelo/project-event-backend/blob/master/mc2.png)
 
 
-## Modelo Conceitual
+## Modelo Conceitual 2.0
 ![mc](https://github.com/TalissonMelo/project-event-backend/blob/master/mc.png)
 
 ## Informações relacionadas a IDE utilizada.
