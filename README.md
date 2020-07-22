@@ -1,4 +1,6 @@
-# project-event-backend
+# Projeto Event
+### Acesse abaixo a URL  para ver o site Event 1.0
+
 ### https://projeto-integrador-projeto-implementacao-event.netlify.app/
 
 ### Descrição do projeto
