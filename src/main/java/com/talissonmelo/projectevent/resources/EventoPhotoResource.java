@@ -1,5 +1,7 @@
 package com.talissonmelo.projectevent.resources;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class EventoPhotoResource {
 	private EventPhotoService eventPhotoService;
 	
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public Photo updatePhoto(@PathVariable Integer eventId, @Valid EventPhotoDTO eventPhotoDTO) {
+	public Photo updatePhoto(@PathVariable Integer eventId, @Valid EventPhotoDTO eventPhotoDTO) throws IOException {
 		
 		Event event = eventService.findById(eventId);		
 		MultipartFile file = eventPhotoDTO.getFile();
@@ -38,7 +40,7 @@ public class EventoPhotoResource {
 		eventPhoto.setDescription(eventPhotoDTO.getDescription());
 		eventPhoto.setContentType(file.getContentType());
 		eventPhoto.setSize(file.getSize());
-		eventPhoto = eventPhotoService.save(eventPhoto);
+		eventPhoto = eventPhotoService.save(eventPhoto, file.getInputStream());
 		return eventPhoto;
 	}
 }

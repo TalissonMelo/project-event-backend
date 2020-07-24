@@ -1,0 +1,37 @@
+package com.talissonmelo.projectevent.services.storage.impl;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+
+import com.talissonmelo.projectevent.services.exceptions.StorageException;
+import com.talissonmelo.projectevent.services.storage.PhotoStorageService;
+
+@Service
+public class PhotoLocalStorageService implements PhotoStorageService {
+	
+	@Value("${default.storage.local}")
+	private String pathFile;
+
+	@Override
+	public void savePhoto(NewPhoto photo) {
+		try {
+
+			Path path = getFilePath(photo.getNameFile());
+			FileCopyUtils.copy(photo.getStream(), Files.newOutputStream(path));
+
+		} catch (IOException e) {
+			throw new StorageException("Falha ao salvar Arquivo local", e.getCause());
+		}
+	}
+
+	private Path getFilePath(String nameFile) {
+		return Paths.get(pathFile, nameFile);
+	}
+
+}
