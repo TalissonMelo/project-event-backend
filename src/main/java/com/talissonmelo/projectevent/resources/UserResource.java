@@ -24,7 +24,6 @@ import com.talissonmelo.projectevent.dto.UpdatePassword;
 import com.talissonmelo.projectevent.dto.UserAuthenticateDTO;
 import com.talissonmelo.projectevent.dto.UserDTO;
 import com.talissonmelo.projectevent.dto.UserListDTO;
-import com.talissonmelo.projectevent.dto.UserUpdateDTO;
 import com.talissonmelo.projectevent.services.UserService;
 import com.talissonmelo.projectevent.services.exceptions.ObjectNotFoundException;
 
@@ -66,12 +65,12 @@ public class UserResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@Valid @PathVariable Integer id,@Valid @RequestBody UserUpdateDTO userUpdate) {
-		User obj = toUpdate(userUpdate);
+	public ResponseEntity<User> update(@Valid @PathVariable Integer id, @RequestBody UserDTO objDTO) {
+		User obj = toEntity(objDTO);
 		User entity = userService.update(id, obj);
 		return ResponseEntity.ok().body(entity);
 	}
-
+	
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticate(@RequestBody UserAuthenticateDTO objDTO) {
 		try {
@@ -91,10 +90,6 @@ public class UserResource {
 
 	private User toEntity(UserDTO userDTO) {
 		return mapper.map(userDTO, User.class);
-	}
-	
-	private User toUpdate(@Valid UserUpdateDTO userUpdate) {
-		return mapper.map(userUpdate, User.class);
 	}
 	
 	private UserListDTO toModelMapper(User user) {
