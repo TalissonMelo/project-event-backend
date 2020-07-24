@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.talissonmelo.projectevent.domain.Photo;
 import com.talissonmelo.projectevent.repositories.EventRepository;
+import com.talissonmelo.projectevent.services.exceptions.StorageException;
 import com.talissonmelo.projectevent.services.storage.PhotoStorageService;
 import com.talissonmelo.projectevent.services.storage.PhotoStorageService.NewPhoto;
 
@@ -45,5 +46,10 @@ public class EventPhotoService {
 		photoStorageService.replacePhoto(nameFileExist , newPhoto);
 		
 		return eventPhoto;
+	}
+	
+	public Photo findByPhoto(Integer eventId) {
+		return repository.findPhotoById(eventId)
+				.orElseThrow(() -> new StorageException("Não existe um cadastro de foto de evento com código " + eventId));
 	}
 }

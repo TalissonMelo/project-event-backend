@@ -1,6 +1,7 @@
 package com.talissonmelo.projectevent.services.storage.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,6 +43,16 @@ public class PhotoLocalStorageService implements PhotoStorageService {
 
 	private Path getFilePath(String nameFile) {
 		return Paths.get(pathFile, nameFile);
+	}
+
+	@Override
+	public InputStream findByPhoto(String namePhoto) {
+		try {
+			Path path = getFilePath(namePhoto);
+			 return Files.newInputStream(path);
+		} catch (IOException e) {
+			throw new StorageException("Falha ao buscar arquivo " + namePhoto + " .", e.getCause());
+		}
 	}
 
 }

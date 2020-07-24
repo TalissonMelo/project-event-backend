@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,5 +43,10 @@ public class EventoPhotoResource {
 		eventPhoto.setSize(file.getSize());
 		eventPhoto = eventPhotoService.save(eventPhoto, file.getInputStream());
 		return eventPhoto;
+	}
+	
+	@GetMapping
+	public Photo findByPhotoEvent(@PathVariable Integer eventId) {
+		return eventPhotoService.findByPhoto(eventId);
 	}
 }
