@@ -31,7 +31,7 @@ import com.talissonmelo.projectevent.services.storage.PhotoStorageService;
 
 @RestController
 @RequestMapping(value = "events/{eventId}/photo")
-public class EventoPhotoResource {
+public class EventPhotoResource {
 	
 	@Autowired
 	private EventService eventService;
