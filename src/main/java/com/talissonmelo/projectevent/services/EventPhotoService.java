@@ -19,37 +19,46 @@ public class EventPhotoService {
 
 	@Autowired
 	private EventRepository repository;
-	
+
 	@Autowired
 	private PhotoStorageService photoStorageService;
-	
+
 	@Transactional
 	public Photo save(Photo eventPhoto, InputStream photoData) {
-		
+
 		Optional<Photo> photoEventExist = repository.findPhotoById(eventPhoto.getEvent().getId());
 		String newNameFile = photoStorageService.newNameFile(eventPhoto.getName());
 		String nameFileExist = null;
-		
-		if(photoEventExist.isPresent()) {
+
+		if (photoEventExist.isPresent()) {
 			nameFileExist = photoEventExist.get().getName();
 			repository.delete(photoEventExist.get());
 		}
-		
+
 		eventPhoto.setName(newNameFile);
 		eventPhoto = repository.save(eventPhoto);
 		repository.flush();
-		
+
 		NewPhoto newPhoto = new NewPhoto();
 		newPhoto.setNameFile(eventPhoto.getName());
 		newPhoto.setStream(photoData);
-		
-		photoStorageService.replacePhoto(nameFileExist , newPhoto);
-		
+
+		photoStorageService.replacePhoto(nameFileExist, newPhoto);
+
 		return eventPhoto;
 	}
-	
+
 	public Photo findByPhoto(Integer eventId) {
-		return repository.findPhotoById(eventId)
-				.orElseThrow(() -> new StorageException("Não existe um cadastro de foto de evento com código " + eventId));
+		return repository.findPhotoById(eventId).orElseThrow(
+				() -> new StorageException("Não existe um cadastro de foto de evento com código " + eventId));
+	}
+
+	@Transactional
+	public void deletePhoto(Integer eventId) {
+		Photo photo = findByPhoto(eventId);
+		repository.delete(photo);
+		repository.flush();
+		
+		photoStorageService.removePhoto(photo.getName());
 	}
 }
