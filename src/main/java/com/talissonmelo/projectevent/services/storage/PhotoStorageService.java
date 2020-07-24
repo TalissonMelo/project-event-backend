@@ -7,8 +7,18 @@ public interface PhotoStorageService {
 
 	void savePhoto(NewPhoto photo);
 
+	void removePhoto(String namePhoto);
+	
 	default String newNameFile(String name) {
 		return UUID.randomUUID().toString() + "__" + name;
+	}
+	
+	default void replacePhoto(String nameFileExist, NewPhoto newPhoto) {
+		this.savePhoto(newPhoto);
+
+		if(nameFileExist != null) {
+			this.removePhoto(nameFileExist);
+		}
 	}
 	
 	class NewPhoto {

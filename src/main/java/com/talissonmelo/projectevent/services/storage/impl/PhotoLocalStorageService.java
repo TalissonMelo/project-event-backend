@@ -14,7 +14,7 @@ import com.talissonmelo.projectevent.services.storage.PhotoStorageService;
 
 @Service
 public class PhotoLocalStorageService implements PhotoStorageService {
-	
+
 	@Value("${default.storage.local}")
 	private String pathFile;
 
@@ -27,6 +27,16 @@ public class PhotoLocalStorageService implements PhotoStorageService {
 
 		} catch (IOException e) {
 			throw new StorageException("Falha ao salvar Arquivo local", e.getCause());
+		}
+	}
+
+	@Override
+	public void removePhoto(String namePhoto) {
+		try {
+			Path path = getFilePath(namePhoto);
+			Files.deleteIfExists(path);
+		} catch (IOException e) {
+			throw new StorageException("Falha ao remover Arquivo local", e.getCause());
 		}
 	}
 

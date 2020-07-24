@@ -27,8 +27,10 @@ public class EventPhotoService {
 		
 		Optional<Photo> photoEventExist = repository.findPhotoById(eventPhoto.getEvent().getId());
 		String newNameFile = photoStorageService.newNameFile(eventPhoto.getName());
+		String nameFileExist = null;
 		
 		if(photoEventExist.isPresent()) {
+			nameFileExist = photoEventExist.get().getName();
 			repository.delete(photoEventExist.get());
 		}
 		
@@ -40,7 +42,7 @@ public class EventPhotoService {
 		newPhoto.setNameFile(eventPhoto.getName());
 		newPhoto.setStream(photoData);
 		
-		photoStorageService.savePhoto(newPhoto);
+		photoStorageService.replacePhoto(nameFileExist , newPhoto);
 		
 		return eventPhoto;
 	}
