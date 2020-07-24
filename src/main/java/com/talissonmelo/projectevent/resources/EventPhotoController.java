@@ -4,6 +4,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +19,7 @@ import com.talissonmelo.projectevent.dto.photo.EventPhotoDTO;
 public class EventPhotoController {
 
 	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public void insertPhoto(@PathVariable Integer eventId, EventPhotoDTO file) {
+	public void insertPhoto(@PathVariable Integer eventId,@Valid EventPhotoDTO file) {
 
 		try {
 			String nameFile = UUID.randomUUID().toString() + "__" + file.getFile().getOriginalFilename();
@@ -25,7 +27,7 @@ public class EventPhotoController {
 			file.getFile().transferTo(path);
 			
 		} catch (Exception e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e.getCause());
 		}
 
 	}

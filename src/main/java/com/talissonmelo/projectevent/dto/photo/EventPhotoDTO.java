@@ -1,10 +1,19 @@
 package com.talissonmelo.projectevent.dto.photo;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.web.multipart.MultipartFile;
+
+import com.talissonmelo.projectevent.config.validation.FileSize;
 
 public class EventPhotoDTO {
 
+	@NotNull
+	@FileSize(max = "800KB")
 	private MultipartFile file;
+	
+	@NotBlank
 	private String description;
 	
 	public MultipartFile getFile() {
