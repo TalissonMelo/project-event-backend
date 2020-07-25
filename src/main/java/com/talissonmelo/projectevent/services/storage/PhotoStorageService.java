@@ -1,7 +1,11 @@
 package com.talissonmelo.projectevent.services.storage;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.UUID;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 
 public interface PhotoStorageService {
 
@@ -22,6 +26,15 @@ public interface PhotoStorageService {
 
 		if(nameFileExist != null) {
 			this.removePhoto(nameFileExist);
+		}
+	}
+	
+	default void mediaTypePhotoExistAccept(MediaType mediaTypePhoto, List<MediaType> mediaTypesAccept) throws HttpMediaTypeNotAcceptableException {
+		boolean compatible = mediaTypesAccept
+				.stream()
+				.anyMatch(mediaTypesPhotoAccept -> mediaTypesPhotoAccept.isCompatibleWith(mediaTypePhoto));
+		if(!compatible) {
+			throw new HttpMediaTypeNotAcceptableException(mediaTypesAccept);
 		}
 	}
 	
