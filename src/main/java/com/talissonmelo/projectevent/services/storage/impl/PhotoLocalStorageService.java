@@ -49,9 +49,19 @@ public class PhotoLocalStorageService implements PhotoStorageService {
 	public InputStream findByPhoto(String namePhoto) {
 		try {
 			Path path = getFilePath(namePhoto);
-			 return Files.newInputStream(path);
+			return Files.newInputStream(path);
 		} catch (IOException e) {
 			throw new StorageException("Falha ao buscar arquivo " + namePhoto + " .", e.getCause());
+		}
+	}
+
+	@Override
+	public InputStream findByPhotoUser(String namePhoto) {
+		try {
+			Path path = Paths.get("D://Pi//userPhotos", namePhoto);
+			return Files.newInputStream(path);
+		} catch (IOException e) {
+			throw new StorageException("Falha ao buscar arquivo " + namePhoto, e.getCause());
 		}
 	}
 

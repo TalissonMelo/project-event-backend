@@ -7,6 +7,8 @@ public interface PhotoStorageService {
 
 	InputStream findByPhoto(String namePhoto);
 	
+	InputStream findByPhotoUser(String namePhoto);
+	
 	void savePhoto(NewPhoto photo);
 
 	void removePhoto(String namePhoto);

@@ -28,6 +28,7 @@ public class User implements Serializable {
 	private String CpfCnpj;
 	private String phone;
 	private String photo;
+	private String photoContext;
 	
 	@JsonIgnore
 	private String password;
@@ -135,6 +136,13 @@ public class User implements Serializable {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	public String getPhotoContext() {
+		return photoContext;
+	}
+
+	public void setPhotoContext(String photoContext) {
+		this.photoContext = photoContext;
 	}
 
 	@Override
