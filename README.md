@@ -39,3 +39,8 @@ Para realizar os testes na aplicação pode-se utilizar uma extensão do navegad
 # Front-End
 
 O desenvolvimento da parte do front-end (Uma página WEB nativa com Javascript utilizando as tecnologias react, https://projeto-integrador-projeto-implementacao-event.netlify.app/) juntamente com validações de campos, filtros de pesquisa, implementações para melhorar a experiência do cliente que irá consumir o serviço.
+
+
+## Cliente Java
+
+##### https://github.com/TalissonMelo/client-rest-api-java-spring
