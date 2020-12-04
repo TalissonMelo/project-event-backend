@@ -10,14 +10,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "Cidade", description = "Representação de Cidade")
 @Entity
 @Table(name = "Cidade")
 public class City implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@ApiModelProperty(example = "1")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@ApiModelProperty(example = "ARAGUARI")
 	private String name;
 
 	@ManyToOne

@@ -13,14 +13,19 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "Estado")
 public class State implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@ApiModelProperty(example = "1")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@ApiModelProperty(example = "MINAS GERAIS")
 	private String name;
 	
 	@JsonIgnore
