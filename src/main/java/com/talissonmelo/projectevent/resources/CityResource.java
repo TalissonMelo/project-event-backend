@@ -24,7 +24,7 @@ public class CityResource {
 
 	@ApiOperation(value = "Busca uma cidade por Id")
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<City> findById(@ApiParam("Id de uma cidade") @PathVariable Integer id){
+	public ResponseEntity<City> findById(@ApiParam(value = "Id de uma cidade", example = "1") @PathVariable Integer id){
 		City city = cityService.findById(id);
 		return ResponseEntity.ok().body(city);
 	}
