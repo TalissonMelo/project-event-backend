@@ -24,7 +24,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.withUser("Mai")
 				.password(passwordEncoder().encode("123"))
 				.roles("ADMIN");
-			
 	}
 	
 	@Bean

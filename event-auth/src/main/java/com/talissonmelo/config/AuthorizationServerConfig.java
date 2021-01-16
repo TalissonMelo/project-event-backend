@@ -38,6 +38,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.withClient("event-mobile")
 				.secret(encoder.encode("mobile123"))
 				.authorizedGrantTypes("password")
+				.accessTokenValiditySeconds(6*60*6)
+				.refreshTokenValiditySeconds(3*60*6)
 				.scopes("read");
 	}
 	
