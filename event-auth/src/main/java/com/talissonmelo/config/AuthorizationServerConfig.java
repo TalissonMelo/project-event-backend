@@ -32,7 +32,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(encoder.encode("web123"))
 				.authorizedGrantTypes("password", "refresh_token")
 				.scopes("write","read")
-				.accessTokenValiditySeconds(60*60*6)
+				.accessTokenValiditySeconds(6*60*6)
+				.refreshTokenValiditySeconds(3*60*6)
 			.and()
 				.withClient("event-mobile")
 				.secret(encoder.encode("mobile123"))
@@ -42,7 +43,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-// 		security.checkTokenAccess("permitAll()");		
 		security.checkTokenAccess("isAuthenticated()");
 	}
 	
@@ -50,6 +50,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints
 		.authenticationManager(authenticationManager)
-		.userDetailsService(userService);
+		.userDetailsService(userService)
+		.reuseRefreshTokens(false);
 	}
 }
