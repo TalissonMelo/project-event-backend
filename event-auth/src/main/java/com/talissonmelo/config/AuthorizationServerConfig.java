@@ -14,13 +14,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
-	
+
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private UserDetailsService userService;
 
@@ -40,19 +40,22 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.authorizedGrantTypes("password")
 				.accessTokenValiditySeconds(6*60*6)
 				.refreshTokenValiditySeconds(3*60*6)
+				.scopes("read")
+			.and()
+				.withClient("faturamento")
+				.secret(encoder.encode("fat123"))
+				.authorizedGrantTypes("client_credentials")
 				.scopes("read");
 	}
-	
+
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.checkTokenAccess("isAuthenticated()");
 	}
-	
+
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints
-		.authenticationManager(authenticationManager)
-		.userDetailsService(userService)
-		.reuseRefreshTokens(false);
+		endpoints.authenticationManager(authenticationManager).userDetailsService(userService)
+				.reuseRefreshTokens(false);
 	}
 }
